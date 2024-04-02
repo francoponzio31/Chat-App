@@ -1,0 +1,10 @@
+- hashear passwords
+- autorizacion
+- CORS
+- web sockets
+- cache
+- integracion fileserver
+- swagger
+- interfaz para admin
+- Mailing
+- Tests de carga

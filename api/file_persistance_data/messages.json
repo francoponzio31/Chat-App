@@ -1,0 +1,23 @@
+[
+    {
+        "id": 0,
+        "chat_id": 1,
+        "sender_user_id": 2,
+        "content": "hello world",
+        "joined_date": "2024-04-01T21:20:53.224846"
+    },
+    {
+        "id": 1,
+        "chat_id": 1,
+        "sender_user_id": 1,
+        "content": "hello world",
+        "joined_date": "2024-04-01T21:21:01.605231"
+    },
+    {
+        "id": 2,
+        "chat_id": 1,
+        "sender_user_id": 1,
+        "content": "hello world",
+        "joined_date": "2024-04-01T21:31:58.528975"
+    }
+]

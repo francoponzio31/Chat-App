@@ -1,0 +1,17 @@
+To generate a new migration based on changes in your models, run:
+
+    alembic revision --autogenerate -m "Description of changes"
+
+This will create a new migration file in alembic/versions with a name that includes a hash and your description. Review the generated migration file to ensure the changes are correct and safe.
+
+To apply the migrations to your database, use:
+
+    alembic upgrade head
+
+This will apply all pending migrations up to the most recent one (denoted as "head").
+
+If you need to revert the last applied migration, you can use:
+
+    alembic downgrade -1
+
+And to revert multiple migrations, you can specify the number of revisions you wish to revert instead of -1.
