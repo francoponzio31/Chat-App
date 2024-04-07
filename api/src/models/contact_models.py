@@ -12,7 +12,7 @@ class Contact:
         self.added_date = added_date or datetime.now()
 
     def __repr__(self):
-        return f"<Contact {self.contact}>"
+        return f"<Contact {self.user_id} -> {self.contact_user_id}>"
 
 
 class ContactSQLModel(Contact, BaseModel):

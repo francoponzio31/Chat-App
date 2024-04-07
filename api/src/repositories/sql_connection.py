@@ -19,7 +19,6 @@ BaseModel = declarative_base()
 
 
 def create_db_session():
-    engine = engine
     db_session = scoped_session(
         sessionmaker(autocommit=False, autoflush=False, bind=engine, expire_on_commit=False)
     )
@@ -50,8 +49,6 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
 
 
 def init_db():
-
-    engine = engine
 
     # import sql models here to create they tables
     from models.user_models import UserSQLModel

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from utilities.customExceptions import EntityNotFoundError
-from utilities.utils import datetime_decoder, datetime_encoder
+from utilities.utils import json_decoder, json_encoder
 from dotenv import load_dotenv
 from utilities.utils import get_env_value
 import json
@@ -26,14 +26,14 @@ class JSONBaseRepository(ABC):
     def _load_data(self):
         try:
             with open(self.data_persistence_path, "r") as file:
-                return json.load(file, object_hook=datetime_decoder)
+                return json.load(file, object_hook=json_decoder)
         except FileNotFoundError:
             return []
 
 
     def _save_data(self, data):
         with open(self.data_persistence_path, "w") as file:
-            json.dump(data, file, indent=4, default=datetime_encoder)
+            json.dump(data, file, indent=4, default=json_encoder)
 
 
     def get_all(self):

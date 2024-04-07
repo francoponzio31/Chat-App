@@ -1,4 +1,3 @@
-- integrar un sonarqube
 - CORS
 - manejo de zonas horarias
 - autorizacion, permisos

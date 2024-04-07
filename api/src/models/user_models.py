@@ -32,8 +32,8 @@ class UserSQLModel(User, BaseModel):
 
 class UserJSONModel(User):
 
-    def __init__(self, id, email, username, role, last_connection=None, creation_date=None, password=None, picture_id=None):
-        super().__init__(email, username, role, last_connection, creation_date, password, picture_id)
+    def __init__(self, id, email, username, password, role="user", last_connection=None, creation_date=None, picture_id=None):
+        super().__init__(email, username, password, role, last_connection, creation_date, picture_id)
         self.id = id
 
     def to_dict(self) -> dict:

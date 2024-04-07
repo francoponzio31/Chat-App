@@ -1,7 +1,4 @@
 __pycache__/
 venv/
 *.db
-*data.json
-.env
-*.log*
 .scannerwork
