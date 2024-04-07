@@ -8,6 +8,7 @@ class BaseConfig:
     DEBUG = get_env_value("DEBUG", False)
     TESTING = get_env_value("TESTING", False)
     SECRET_KEY = get_env_value("SECRET_KEY")
+    JWT_KEY = get_env_value("JWT_KEY")
     HOST = get_env_value("API_HOST", "127.0.0.1")
     PORT = get_env_value("API_PORT", 8080)
     DATA_PERSISTENCE_TYPE = get_env_value("DATA_PERSISTENCE_TYPE")

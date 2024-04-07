@@ -1,12 +1,9 @@
 from abc import ABC, abstractmethod
-from repositories.sql_connection import get_db_session
-from utilities.logger import logger
+from repositories.sql_connection import with_db_session, scoped_session
 from utilities.customExceptions import EntityNotFoundError
 
 
 class SQLBaseRepository(ABC):
-
-    db_session = get_db_session()
 
     @property
     @abstractmethod
@@ -14,48 +11,54 @@ class SQLBaseRepository(ABC):
         raise NotImplementedError("Implement this method on all subclasses.")
 
 
-    def get_all(self):
-        return self.Model.query.all()
+    @with_db_session
+    def get_all(self, db_session:scoped_session=None):
+        return db_session.query(self.Model).all()
 
 
-    def get_by_id(self, id:int):
-        obj = self.Model.query.get(id)
+    @with_db_session
+    def get_by_id(self, id:int, db_session:scoped_session=None):
+        obj = db_session.query(self.Model).get(id)
         if not obj:
             raise EntityNotFoundError
         return obj
 
 
-    def create_one(self, new_obj_data:dict):
+    @with_db_session
+    def create_one(self, new_obj_data:dict, db_session:scoped_session=None):
         try:
             new_obj = self.Model(**new_obj_data)
-            self.db_session.add(new_obj)
-            self.db_session.commit()
+            db_session.add(new_obj)
+            db_session.commit()
             return new_obj
-        except Exception as ex:
-            logger.exception(str(ex))
-            self.db_session.rollback()
+        except Exception:
+            db_session.rollback()
             raise
 
 
-    def update_one(self, id:int, updated_obj_data:dict):
+    @with_db_session
+    def update_one(self, id:int, updated_obj_data:dict, db_session:scoped_session=None):
         try:
-            obj = self.get_by_id(id)
+            obj = db_session.query(self.Model).get(id)
+            if not obj:
+                raise EntityNotFoundError
             for key, value in updated_obj_data.items():
                 setattr(obj, key, value) 
-            self.db_session.commit()
+            db_session.commit()
             return obj
-        except Exception as ex:
-            logger.exception(str(ex))
-            self.db_session.rollback()
+        except Exception:
+            db_session.rollback()
             raise
 
-
-    def delete_one(self, id:int):
+    
+    @with_db_session
+    def delete_one(self, id:int, db_session:scoped_session=None):
         try:
-            obj = self.get_by_id(id)
-            self.db_session.delete(obj)
-            self.db_session.commit()
-        except Exception as ex:
-            logger.exception(str(ex))
-            self.db_session.rollback()
+            obj = db_session.query(self.Model).get(id)
+            if not obj:
+                raise EntityNotFoundError
+            db_session.delete(obj)
+            db_session.commit()
+        except Exception:
+            db_session.rollback()
             raise

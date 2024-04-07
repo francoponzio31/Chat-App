@@ -1,6 +1,7 @@
 from repositories.users.users_repository_interface import UsersRepositoryInterface
 from repositories.sql_base_repository import SQLBaseRepository
 from models.user_models import UserSQLModel
+from repositories.sql_connection import with_db_session, scoped_session
 from utilities.customExceptions import EntityNotFoundError
 
 
@@ -11,8 +12,9 @@ class SQLUserRepository(SQLBaseRepository, UsersRepositoryInterface):
         return UserSQLModel
 
 
-    def get_by_email(self, user_email:str, raise_if_not_found:bool=True) -> UserSQLModel:
-        user = self.Model.query.filter_by(
+    @with_db_session
+    def get_by_email(self, user_email:str, raise_if_not_found:bool=True, db_session:scoped_session=None) -> UserSQLModel:
+        user = db_session.query(self.Model).filter_by(
             email = user_email
         ).one_or_none()
         if not user and raise_if_not_found:

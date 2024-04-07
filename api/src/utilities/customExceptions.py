@@ -1,5 +1,7 @@
 class EntityNotFoundError(Exception): pass
 
+class InvalidCredentials(Exception): pass
+
 class EmailAlreadyRegistered(Exception): pass
 
 class IsGroupModificationError(Exception): pass

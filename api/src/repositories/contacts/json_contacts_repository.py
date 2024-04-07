@@ -9,7 +9,7 @@ class JSONContactRepository(JSONBaseRepository, ContactsRepositoryInterface):
 
     def __init__(self) -> None:
         self.users_repository = JSONUserRepository()
-        super().__init__(filename="contacts.json")
+        super().__init__(filename="contacts.data.json")
 
 
     @property

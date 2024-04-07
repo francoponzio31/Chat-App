@@ -7,7 +7,7 @@ from utilities.customExceptions import EntityNotFoundError
 class JSONUserRepository(JSONBaseRepository, UsersRepositoryInterface):
 
     def __init__(self):
-        super().__init__(filename="users.json")
+        super().__init__(filename="users.data.json")
 
 
     @property

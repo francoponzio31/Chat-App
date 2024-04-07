@@ -5,31 +5,40 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlite3 import Connection as SQLite3Connection
 from utilities.utils import get_env_value
 from dotenv import load_dotenv
+from functools import wraps
+from utilities.logger import logger
 
+
+load_dotenv()
+DB_URL = get_env_value("DB_URL")
+if DB_URL:
+    engine = create_engine(DB_URL)
 
 # Models base class
 BaseModel = declarative_base()
-engine = None
-db_session = None
 
 
-def get_engine():
-    global engine
-    if engine is None:
-        load_dotenv()
-        DB_URL = get_env_value("DB_URL")
-        engine = create_engine(DB_URL)
-    return engine
-
-
-def get_db_session():
-    global db_session
-    if db_session is None:
-        engine = get_engine()
-        db_session = scoped_session(
-            sessionmaker(autocommit=False, autoflush=False, bind=engine)
-        )
+def create_db_session():
+    engine = engine
+    db_session = scoped_session(
+        sessionmaker(autocommit=False, autoflush=False, bind=engine, expire_on_commit=False)
+    )
     return db_session
+
+
+def with_db_session(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        db_session = create_db_session()
+        try:
+            result = f(*args, db_session=db_session, **kwargs)
+            return result
+        except Exception as ex:
+            logger.exception(str(ex))
+            raise
+        finally:
+            db_session.close()
+    return wrapper
 
 
 @event.listens_for(Engine, "connect")   # Enables sqlite foreign keys constraints
@@ -42,9 +51,7 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
 
 def init_db():
 
-    engine = get_engine()
-    db_session = get_db_session()
-    BaseModel.query = db_session.query_property()   # allows starting queries using the session without needing to reference the session explicitly
+    engine = engine
 
     # import sql models here to create they tables
     from models.user_models import UserSQLModel

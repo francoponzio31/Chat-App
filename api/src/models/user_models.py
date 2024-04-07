@@ -5,7 +5,7 @@ from repositories.sql_connection import BaseModel
 
 class User:
 
-    def __init__(self, email, username, role, last_connection=None, creation_date=None, password=None, picture_id=None):
+    def __init__(self, email, username, password, role="user", last_connection=None, creation_date=None, picture_id=None):
         self.email = email
         self.username = username
         self.password = password
@@ -23,7 +23,7 @@ class UserSQLModel(User, BaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(320), unique=True, nullable=False)
     username = Column(String(40), nullable=False)
-    password = Column(String(45), nullable=True)
+    password = Column(String(255), nullable=False)
     role = Column(Enum("user", "admin", name="user_roles"), nullable=False)
     picture_id = Column(String(36), nullable=True)
     creation_date = Column(DateTime, default=datetime.now, nullable=False)

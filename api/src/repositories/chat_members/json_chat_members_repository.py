@@ -9,7 +9,7 @@ class JSONChatMemberRepository(JSONBaseRepository, ChatMembersRepositoryInterfac
 
     def __init__(self):
         self.users_repository = JSONUserRepository()
-        super().__init__(filename="chat_members.json")
+        super().__init__(filename="chat_members.data.json")
 
 
     @property

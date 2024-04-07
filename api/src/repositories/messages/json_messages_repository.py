@@ -9,7 +9,7 @@ class JSONMessageRepository(JSONBaseRepository, MessagesRepositoryInterface):
 
     def __init__(self) -> None:
         self.users_repository = JSONUserRepository()
-        super().__init__(filename="messages.json")
+        super().__init__(filename="messages.data.json")
 
 
     @property

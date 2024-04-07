@@ -1,6 +1,8 @@
-- hashear passwords
-- autorizacion
+- integrar un sonarqube
 - CORS
+- manejo de zonas horarias
+- autorizacion, permisos
+- autenticacion por terceros
 - web sockets
 - cache
 - integracion fileserver
