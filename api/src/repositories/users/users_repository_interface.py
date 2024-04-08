@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import List
+
 from models.user_models import User
 
 
 class UsersRepositoryInterface(ABC):
 
     @abstractmethod
-    def get_all(self) -> List[User]:
+    def get_all(self) -> list[User]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 

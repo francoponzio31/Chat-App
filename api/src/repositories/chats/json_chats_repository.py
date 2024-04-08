@@ -2,7 +2,7 @@ from repositories.chats.chats_repository_interface import ChatsRepositoryInterfa
 from repositories.json_base_repository import JSONBaseRepository
 from repositories.chat_members.json_chat_members_repository import JSONChatMemberRepository
 from models.chat_models import ChatJSONModel
-from typing import List
+
 
 
 class JSONChatRepository(JSONBaseRepository, ChatsRepositoryInterface):
@@ -17,7 +17,7 @@ class JSONChatRepository(JSONBaseRepository, ChatsRepositoryInterface):
         return ChatJSONModel
 
 
-    def get_user_chats(self, user_id) -> List[ChatJSONModel]:
+    def get_user_chats(self, user_id) -> list[ChatJSONModel]:
 
         all_chat_members = self.chat_members_repository.get_all()
         user_chats = []

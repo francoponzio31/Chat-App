@@ -2,7 +2,7 @@ from repositories.contacts.contacts_repository_interface import ContactsReposito
 from repositories.json_base_repository import JSONBaseRepository 
 from models.contact_models import ContactJSONModel
 from repositories.users.json_users_repository import JSONUserRepository
-from typing import List
+
 
 
 class JSONContactRepository(JSONBaseRepository, ContactsRepositoryInterface):
@@ -22,7 +22,7 @@ class JSONContactRepository(JSONBaseRepository, ContactsRepositoryInterface):
         return super().create_one(new_contact_data)
 
 
-    def get_user_contacts(self, user_id:int) -> List[ContactJSONModel]:
+    def get_user_contacts(self, user_id:int) -> list[ContactJSONModel]:
         contacts = self.get_all()
         user_contacts = []
         for contact in contacts:

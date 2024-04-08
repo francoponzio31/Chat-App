@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import List
+
 from models.chat_models import Chat
 
 
 class ChatsRepositoryInterface(ABC):
 
     @abstractmethod
-    def get_all(self) -> List[Chat]:
+    def get_all(self) -> list[Chat]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 
@@ -30,5 +30,5 @@ class ChatsRepositoryInterface(ABC):
         raise NotImplementedError("Implement this method on all subclasses.")
 
     @abstractmethod
-    def get_user_chats(self, user_id) -> List[Chat]:
+    def get_user_chats(self, user_id) -> list[Chat]:
         raise NotImplementedError("Implement this method on all subclasses.")

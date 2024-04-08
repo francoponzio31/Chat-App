@@ -7,10 +7,10 @@ from utilities.logger import logger
 
 class AuthController:
 
-    def login(self) -> Response:
+    def login(self) -> tuple[Response, int]:
         try:
             token = auth_service.login(request.json)
-            return jsonify({"success": True, "message": "Succesful login", "token": token})
+            return jsonify({"success": True, "message": "Succesful login", "token": token}), 200
         except ValidationError as ex:
             return jsonify({"success": False, "message": f"Invalid data: {ex.messages}"}), 400
         except InvalidCredentials:

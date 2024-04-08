@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import List
+
 from models.contact_models import Contact
 
 
 class ContactsRepositoryInterface(ABC):
 
     @abstractmethod
-    def get_all(self) -> List[Contact]:
+    def get_all(self) -> list[Contact]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 
@@ -31,7 +31,7 @@ class ContactsRepositoryInterface(ABC):
 
 
     @abstractmethod
-    def get_user_contacts(self, user_id:int) -> List[Contact]:
+    def get_user_contacts(self, user_id:int) -> list[Contact]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 

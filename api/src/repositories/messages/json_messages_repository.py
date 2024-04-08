@@ -2,7 +2,7 @@ from repositories.messages.messages_repository_interface import MessagesReposito
 from repositories.json_base_repository import JSONBaseRepository 
 from models.message_models import MessageJSONModel
 from repositories.users.json_users_repository import JSONUserRepository
-from typing import List
+
 
 
 class JSONMessageRepository(JSONBaseRepository, MessagesRepositoryInterface):
@@ -17,7 +17,7 @@ class JSONMessageRepository(JSONBaseRepository, MessagesRepositoryInterface):
         return MessageJSONModel
 
 
-    def get_chat_messages(self, chat_id:int) -> List[MessageJSONModel]:
+    def get_chat_messages(self, chat_id:int) -> list[MessageJSONModel]:
         messages = self.get_all()
         chat_messages = []
         for message in messages:

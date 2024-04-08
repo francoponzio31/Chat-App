@@ -3,7 +3,7 @@ from repositories.sql_base_repository import SQLBaseRepository
 from models.message_models import MessageSQLModel
 from repositories.sql_connection import with_db_session, scoped_session
 from sqlalchemy.orm import joinedload
-from typing import List
+
 
 
 class SQLMessageRepository(SQLBaseRepository, MessagesRepositoryInterface):
@@ -14,6 +14,6 @@ class SQLMessageRepository(SQLBaseRepository, MessagesRepositoryInterface):
     
 
     @with_db_session
-    def get_chat_messages(self, chat_id:int , db_session:scoped_session=None) -> List[MessageSQLModel]:
+    def get_chat_messages(self, chat_id:int , db_session:scoped_session=None) -> list[MessageSQLModel]:
         messages = db_session.query(self.Model).options(joinedload(MessageSQLModel.sender_user)).filter_by(chat_id=chat_id).all()
         return messages

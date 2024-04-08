@@ -9,20 +9,20 @@ from utilities.logger import logger
 class UsersController:
         
     @token_required
-    def get_users(self) -> Response:
+    def get_users(self) -> tuple[Response, int]:
         try:
             users = users_service.get_users()
-            return jsonify({"success": True, "message": "Succesful search", "users": users})
+            return jsonify({"success": True, "message": "Succesful search", "users": users}), 200
         except Exception as ex:
             logger.exception(str(ex))
             return jsonify({"success": False, "message": "Error getting users"}), 500
 
 
     @token_required
-    def get_user_by_id(self, user_id:int) -> Response:
+    def get_user_by_id(self, user_id:int) -> tuple[Response, int]:
         try:
             user = users_service.get_user_by_id(user_id)
-            return jsonify({"success": True, "message": "Succesful search", "user": user})
+            return jsonify({"success": True, "message": "Succesful search", "user": user}), 200
         except EntityNotFoundError:
             return jsonify({"success": False, "message": f"User with id {user_id} not found"}), 404
         except Exception as ex:
@@ -30,10 +30,10 @@ class UsersController:
             return jsonify({"success": False, "message": "Error getting user"}), 500
 
 
-    def create_user(self) -> Response:
+    def create_user(self) -> tuple[Response, int]:
         try:
             new_user = users_service.create_user(request.json)
-            return jsonify({"success": True, "message": "Succesful creation", "user": new_user})
+            return jsonify({"success": True, "message": "Succesful creation", "user": new_user}), 200
         except ValidationError as ex:
             return jsonify({"success": False, "message": f"Invalid data: {ex.messages}"}), 400
         except EmailAlreadyRegistered:
@@ -44,10 +44,10 @@ class UsersController:
 
 
     @token_required
-    def update_user(self, user_id:int) -> Response:
+    def update_user(self, user_id:int) -> tuple[Response, int]:
         try:       
             updated_user = users_service.update_user(user_id, request.json)
-            return jsonify({"success": True, "message": "Succesful update", "user": updated_user})
+            return jsonify({"success": True, "message": "Succesful update", "user": updated_user}), 200
         except ValidationError as ex:
             return jsonify({"success": False, "message": f"Invalid data: {ex.messages}"}), 400
         except EntityNotFoundError:
@@ -58,10 +58,10 @@ class UsersController:
 
 
     @token_required
-    def delete_user(self, user_id:int) -> Response:
+    def delete_user(self, user_id:int) -> tuple[Response, int]:
         try:
             users_service.delete_user(user_id)
-            return jsonify({"success": True, "message": "Succesful delete"})
+            return jsonify({"success": True, "message": "Succesful delete"}), 200
         except EntityNotFoundError:
             return jsonify({"success": False, "message": f"User with id {user_id} not found"}), 400
         except Exception as ex:

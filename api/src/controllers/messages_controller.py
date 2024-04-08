@@ -5,24 +5,23 @@ from utilities.customExceptions import UserIsNotInChat
 from utilities.logger import logger
 from utilities.validators import token_required
 
-
 class MessagesController:
 
     @token_required
-    def get_chat_messages(self, chat_id:int) -> Response:
+    def get_chat_messages(self, chat_id:int) -> tuple[Response, int]:
         try:
             messages = messages_service.get_chat_messages(chat_id)
-            return jsonify({"success": True, "message": "Succesful search", "messages": messages})
+            return jsonify({"success": True, "message": "Succesful search", "messages": messages}), 200
         except Exception as ex:
             logger.exception(str(ex))
             return jsonify({"success": False, "message": "Error getting messages"}), 500
 
 
     @token_required
-    def send_message(self) -> Response:
+    def send_message(self) -> tuple[Response, int]:
         try:        
             new_message = messages_service.send_message(request.json)
-            return jsonify({"success": True, "message": "Succesful creation", "new_message": new_message})
+            return jsonify({"success": True, "message": "Succesful creation", "new_message": new_message}), 200
         except ValidationError as ex:
             return jsonify({"success": False, "message": f"Invalid data: {ex.messages}"}), 400
         except UserIsNotInChat:

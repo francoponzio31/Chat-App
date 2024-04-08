@@ -1,12 +1,11 @@
 from schemas.user_schema import user_schema, users_schema
 from repositories import users_repository
-from typing import List, Dict
 from utilities.customExceptions import EmailAlreadyRegistered
 
 
 class UsersService:
         
-    def get_users(self) -> List[Dict]:
+    def get_users(self) -> list[dict]:
         users = users_repository.get_all()
         return users_schema.dump(users)
 

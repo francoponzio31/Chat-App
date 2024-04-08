@@ -1,12 +1,11 @@
 from schemas.contact_schema import contact_schema, contacts_schema
 from repositories import contacts_repository
 from utilities.customExceptions import ContactAlreadyRegisteredError
-from typing import List, Dict
 
 
 class ContactsService:
 
-    def get_user_contacts(self, user_id) -> List[Dict]:
+    def get_user_contacts(self, user_id) -> list[dict]:
         contacts = contacts_repository.get_user_contacts(user_id)
         return contacts_schema.dump(contacts)
 

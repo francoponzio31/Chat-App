@@ -3,7 +3,7 @@ from repositories.sql_base_repository import SQLBaseRepository
 from models.contact_models import ContactSQLModel
 from repositories.sql_connection import with_db_session, scoped_session
 from sqlalchemy.orm import joinedload
-from typing import List
+
 
 
 class SQLContactRepository(SQLBaseRepository, ContactsRepositoryInterface):
@@ -14,7 +14,7 @@ class SQLContactRepository(SQLBaseRepository, ContactsRepositoryInterface):
     
 
     @with_db_session
-    def get_user_contacts(self, user_id:int, db_session:scoped_session=None) -> List[ContactSQLModel]:
+    def get_user_contacts(self, user_id:int, db_session:scoped_session=None) -> list[ContactSQLModel]:
         contacts = db_session.query(self.Model).options(joinedload(ContactSQLModel.contact_user)).filter_by(user_id=user_id).all()
         return contacts
 

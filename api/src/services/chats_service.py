@@ -1,12 +1,11 @@
 from repositories import chats_repository
 from schemas.chat_schema import chat_schema, chats_schema
 from utilities.customExceptions import IsGroupModificationError, GroupNameModificationError
-from typing import List, Dict
 
 
 class ChatsService:
 
-    def get_user_chats(self, user_id) -> List[Dict]:
+    def get_user_chats(self, user_id) -> list[dict]:
         chats = chats_repository.get_user_chats(user_id)
         return chats_schema.dump(chats)
 

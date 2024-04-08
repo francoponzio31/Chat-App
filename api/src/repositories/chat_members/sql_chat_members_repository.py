@@ -3,7 +3,7 @@ from repositories.sql_base_repository import SQLBaseRepository
 from models.chat_member_models import ChatMemberSQLModel
 from repositories.sql_connection import with_db_session, scoped_session
 from sqlalchemy.orm import joinedload
-from typing import List
+
 
 
 class SQLChatMemberRepository(SQLBaseRepository, ChatMembersRepositoryInterface):
@@ -14,7 +14,7 @@ class SQLChatMemberRepository(SQLBaseRepository, ChatMembersRepositoryInterface)
 
 
     @with_db_session
-    def get_chat_members(self, chat_id:int, db_session:scoped_session=None) -> List[ChatMemberSQLModel]:
+    def get_chat_members(self, chat_id:int, db_session:scoped_session=None) -> list[ChatMemberSQLModel]:
         chat_members = db_session.query(self.Model).options(joinedload(ChatMemberSQLModel.user)).filter_by(chat_id=chat_id).all()
         return chat_members
 
