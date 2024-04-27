@@ -6,7 +6,7 @@ from repositories.sql_connection import with_db_session, scoped_session
 
 
 
-class SQLChatRepository(SQLBaseRepository, ChatsRepositoryInterface):
+class SQLChatRepository(SQLBaseRepository[ChatSQLModel], ChatsRepositoryInterface):
 
     @property
     def Model(self) -> ChatSQLModel:

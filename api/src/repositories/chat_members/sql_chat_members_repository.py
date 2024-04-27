@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 
 
 
-class SQLChatMemberRepository(SQLBaseRepository, ChatMembersRepositoryInterface):
+class SQLChatMemberRepository(SQLBaseRepository[ChatMemberSQLModel], ChatMembersRepositoryInterface):
 
     @property
     def Model(self) -> ChatMemberSQLModel:

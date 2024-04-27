@@ -12,4 +12,8 @@ users_bp.add_url_rule("/", "create_user", users_controller.create_user, methods=
 
 users_bp.add_url_rule("/<int:user_id>", "update_user", users_controller.update_user, methods=["PATCH"])
 
+users_bp.add_url_rule("/picture/<int:user_id>", "get_user_picture", users_controller.get_user_picture, methods=["GET"])
+
+users_bp.add_url_rule("/picture/<int:user_id>", "update_user_picture", users_controller.update_user_picture, methods=["PATCH"])
+
 users_bp.add_url_rule("/<int:user_id>", "delete_user", users_controller.delete_user, methods=["DELETE"])

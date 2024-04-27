@@ -3,14 +3,12 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlite3 import Connection as SQLite3Connection
-from utilities.utils import get_env_value
-from dotenv import load_dotenv
+from config.app_config import config
 from functools import wraps
 from utilities.logger import logger
 
 
-load_dotenv()
-DB_URL = get_env_value("DB_URL")
+DB_URL = config.DB_URL
 if DB_URL:
     engine = create_engine(DB_URL)
 

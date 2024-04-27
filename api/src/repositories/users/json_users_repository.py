@@ -4,7 +4,7 @@ from models.user_models import UserJSONModel
 from utilities.custom_exceptions import EntityNotFoundError
 
 
-class JSONUserRepository(JSONBaseRepository, UsersRepositoryInterface):
+class JSONUserRepository(JSONBaseRepository[UserJSONModel], UsersRepositoryInterface):
 
     def __init__(self):
         super().__init__(filename="users.data.json")

@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 
 
 
-class SQLMessageRepository(SQLBaseRepository, MessagesRepositoryInterface):
+class SQLMessageRepository(SQLBaseRepository[MessageSQLModel], MessagesRepositoryInterface):
 
     @property
     def Model(self) -> MessageSQLModel:

@@ -12,7 +12,7 @@ files_router = APIRouter()
 async def get_file_by_id(file_id):
     try:
         file_content, filename, _ = await service.get_file_by_id(file_id, format="b64")
-        return JSONResponse(content=FileResponse(message="File obtained successfully", file=file_content, filename=filename).model_dump())
+        return JSONResponse(content=FileResponse(message="File obtained successfully", content=file_content, filename=filename).model_dump())
     except FileNotFoundError:
         return JSONResponse(content=ErrorResponse(message="File not found").model_dump(), status_code=404)
     except Exception as ex:
@@ -36,7 +36,7 @@ async def download_file_by_id(file_id):
         return JSONResponse(content=ErrorResponse(message="Error getting the file").model_dump(), status_code=500)
 
 
-@files_router.post("/", response_model=FileUploadResponse, tags=["files"])
+@files_router.post("", response_model=FileUploadResponse, tags=["files"])
 async def upload_file(file:UploadFile = File(...)):
     try:
         file_id = await service.upload_file(file)

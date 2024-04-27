@@ -1,28 +1,21 @@
 from repositories.files_repository_interface import FilesRepositoryInterface
+from config.app_config import config
 from typing import Awaitable
-from dotenv import load_dotenv
 from aioboto3 import Session
 from typing import Literal
 from uuid import uuid4
 import mimetypes
 import base64
-import os
-
-
-load_dotenv()
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
 
 
 class S3FilesRepository(FilesRepositoryInterface):
 
     def __init__(self):
-        self.bucket_name = AWS_S3_BUCKET
+        self.bucket_name = config.aws_s3_bucket
 
 
     async def get_s3_client(self):
-        session = Session(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        session = Session(aws_access_key_id=config.aws_access_key_id, aws_secret_access_key=config.aws_secret_access_key)
         return session.client("s3")
     
 

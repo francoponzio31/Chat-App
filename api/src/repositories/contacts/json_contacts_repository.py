@@ -5,7 +5,7 @@ from repositories.users.json_users_repository import JSONUserRepository
 
 
 
-class JSONContactRepository(JSONBaseRepository, ContactsRepositoryInterface):
+class JSONContactRepository(JSONBaseRepository[ContactJSONModel], ContactsRepositoryInterface):
 
     def __init__(self) -> None:
         self.users_repository = JSONUserRepository()

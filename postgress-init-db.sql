@@ -10,7 +10,7 @@ BEGIN
         SELECT FROM pg_catalog.pg_user
         WHERE  usename = 'db_admin') THEN
 
-        CREATE ROLE db_admin LOGIN PASSWORD 'password';
+        CREATE ROLE db_admin LOGIN PASSWORD 'db_admin';
     END IF;
 END
 $$;

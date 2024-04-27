@@ -46,7 +46,7 @@ class UsersController:
     @token_required
     def update_user(self, user_id:int) -> tuple[Response, int]:
         try:       
-            updated_user = users_service.update_user(user_id, request.json)
+            updated_user = users_service.update_user_picture(user_id, request.json)
             return jsonify({"success": True, "message": "Succesful update", "user": updated_user}), 200
         except ValidationError as ex:
             return jsonify({"success": False, "message": f"Invalid data: {ex.messages}"}), 400
@@ -55,6 +55,26 @@ class UsersController:
         except Exception as ex:
             logger.exception(str(ex))
             return jsonify({"success": False, "message": "Error updating user"}), 500
+
+
+    @token_required
+    def get_user_picture(self, user_id:int) -> tuple[Response, int]:
+        try:
+            picture_content = users_service.get_user_picture(user_id)
+            return jsonify({"success": True, "message": "Succesful search", "picture_content": picture_content}), 200
+        except Exception as ex:
+            logger.exception(str(ex))
+            return jsonify({"success": False, "message": "Error getting user picture"}), 500
+
+
+    @token_required
+    def update_user_picture(self, user_id:int) -> tuple[Response, int]:
+        try:
+            picture_id = users_service.update_user_picture(user_id, request.json)
+            return jsonify({"success": True, "message": "Succesful update", "picture_id": picture_id}), 200
+        except Exception as ex:
+            logger.exception(str(ex))
+            return jsonify({"success": False, "message": "Error updating user picture"}), 500
 
 
     @token_required

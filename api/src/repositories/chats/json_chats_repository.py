@@ -5,7 +5,7 @@ from models.chat_models import ChatJSONModel
 
 
 
-class JSONChatRepository(JSONBaseRepository, ChatsRepositoryInterface):
+class JSONChatRepository(JSONBaseRepository[ChatJSONModel], ChatsRepositoryInterface):
 
     def __init__(self):
         self.chat_members_repository = JSONChatMemberRepository()

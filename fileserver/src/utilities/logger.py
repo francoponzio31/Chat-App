@@ -1,13 +1,9 @@
 import logging
-from dotenv import load_dotenv
-from os import getenv
+from config.app_config import config
 from logging.handlers import RotatingFileHandler
 
 
 def setup_logging():
-    
-    load_dotenv()
-    env = getenv("ENV")
 
     logger = logging.getLogger("App Logger")
     logger.setLevel(logging.INFO)
@@ -19,7 +15,7 @@ def setup_logging():
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
 
-    if env == "PROD":
+    if config.env == "PROD":
         # File handler
         file_handler = RotatingFileHandler("logs/prod_logs.log", maxBytes=1048576, backupCount=5)
         file_handler.setLevel(logging.INFO)

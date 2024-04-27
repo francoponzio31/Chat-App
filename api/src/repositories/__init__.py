@@ -1,9 +1,7 @@
-from dotenv import load_dotenv
-from utilities.utils import get_env_value
+from config.app_config import config
 
 
-load_dotenv()
-data_persistence_type = get_env_value("DATA_PERSISTENCE_TYPE")
+data_persistence_type = config.DATA_PERSISTENCE_TYPE
 
 if data_persistence_type == "JSON":
     from repositories.chats.json_chats_repository import JSONChatRepository

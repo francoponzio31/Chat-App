@@ -5,7 +5,7 @@ from repositories.users.json_users_repository import JSONUserRepository
 
 
 
-class JSONChatMemberRepository(JSONBaseRepository, ChatMembersRepositoryInterface):
+class JSONChatMemberRepository(JSONBaseRepository[ChatMemberJSONModel], ChatMembersRepositoryInterface):
 
     def __init__(self):
         self.users_repository = JSONUserRepository()

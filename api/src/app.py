@@ -1,5 +1,5 @@
 from flask import Flask
-from config.app_config import app_config
+from config.app_config import config
 from routers.utils import init_routes, register_error_handlers
 
 
@@ -8,7 +8,7 @@ def create_app() -> Flask:
     app = Flask(__name__)
 
     # CONFIG
-    app.config.from_object(app_config)
+    app.config.from_object(config)
 
     # DB
     if app.config["DATA_PERSISTENCE_TYPE"] == "SQL":

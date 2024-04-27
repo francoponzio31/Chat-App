@@ -19,7 +19,12 @@ def token_required(function):
             return jsonify({"success": False, "message": "Token is missing!"}), 401
         
         try:
-            data = jwt.decode(token, current_app.config["JWT_KEY"], algorithms=["HS256"])
+            data = jwt.decode(
+                token,
+                current_app.config["JWT_KEY"],
+                algorithms=["HS256"],
+                options={"verify_exp": current_app.config["VERIFY_JWT_EXPIRATION"]}
+            )
             request.user = data["user"]     # User data added to request object
 
         except jwt.ExpiredSignatureError:

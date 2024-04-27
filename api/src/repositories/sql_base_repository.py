@@ -1,23 +1,26 @@
 from abc import ABC, abstractmethod
 from repositories.sql_connection import with_db_session, scoped_session
 from utilities.custom_exceptions import EntityNotFoundError
+from typing import Generic, TypeVar
 
 
-class SQLBaseRepository(ABC):
+T = TypeVar("T")
+
+class SQLBaseRepository(Generic[T], ABC):
 
     @property
     @abstractmethod
-    def Model(self):
+    def Model(self) -> T:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 
     @with_db_session
-    def get_all(self, db_session:scoped_session=None):
+    def get_all(self, db_session:scoped_session=None) -> list[T]:
         return db_session.query(self.Model).all()
 
 
     @with_db_session
-    def get_by_id(self, id:int, db_session:scoped_session=None):
+    def get_by_id(self, id:int, db_session:scoped_session=None) -> T:
         obj = db_session.query(self.Model).get(id)
         if not obj:
             raise EntityNotFoundError
@@ -25,7 +28,7 @@ class SQLBaseRepository(ABC):
 
 
     @with_db_session
-    def create_one(self, new_obj_data:dict, db_session:scoped_session=None):
+    def create_one(self, new_obj_data:dict, db_session:scoped_session=None) -> T:
         try:
             new_obj = self.Model(**new_obj_data)
             db_session.add(new_obj)
@@ -37,7 +40,7 @@ class SQLBaseRepository(ABC):
 
 
     @with_db_session
-    def update_one(self, id:int, updated_obj_data:dict, db_session:scoped_session=None):
+    def update_one(self, id:int, updated_obj_data:dict, db_session:scoped_session=None) -> T:
         try:
             obj = db_session.query(self.Model).get(id)
             if not obj:
@@ -52,7 +55,7 @@ class SQLBaseRepository(ABC):
 
     
     @with_db_session
-    def delete_one(self, id:int, db_session:scoped_session=None):
+    def delete_one(self, id:int, db_session:scoped_session=None) -> None:
         try:
             obj = db_session.query(self.Model).get(id)
             if not obj:

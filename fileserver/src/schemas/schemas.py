@@ -13,5 +13,5 @@ class FileUploadResponse(BaseResponse):
 
 class FileResponse(BaseResponse):
     success: bool = True
-    file: str = Field(None, description="Base64 encoded content of the file")
+    content: str = Field(None, description="Base64 encoded content of the file")
     filename: str = Field(None, description="Name of the file")

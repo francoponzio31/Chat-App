@@ -5,7 +5,7 @@ from repositories.sql_connection import with_db_session, scoped_session
 from utilities.custom_exceptions import EntityNotFoundError
 
 
-class SQLUserRepository(SQLBaseRepository, UsersRepositoryInterface):
+class SQLUserRepository(SQLBaseRepository[UserSQLModel], UsersRepositoryInterface):
 
     @property
     def Model(self) -> UserSQLModel:

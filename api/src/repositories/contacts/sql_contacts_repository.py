@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 
 
 
-class SQLContactRepository(SQLBaseRepository, ContactsRepositoryInterface):
+class SQLContactRepository(SQLBaseRepository[ContactSQLModel], ContactsRepositoryInterface):
 
     @property
     def Model(self) -> ContactSQLModel:
