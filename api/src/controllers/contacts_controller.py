@@ -1,7 +1,7 @@
 from flask import request, jsonify, Response
 from services.contacts_service import contacts_service
 from marshmallow import ValidationError
-from utilities.customExceptions import EntityNotFoundError, ContactAlreadyRegisteredError
+from utilities.custom_exceptions import EntityNotFoundError, ContactAlreadyRegisteredError
 from utilities.validators import token_required
 from utilities.logger import logger
 

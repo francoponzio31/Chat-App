@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-
 from models.message_models import Message
 
 

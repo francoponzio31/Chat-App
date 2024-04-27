@@ -2,7 +2,7 @@ from repositories.users.users_repository_interface import UsersRepositoryInterfa
 from repositories.sql_base_repository import SQLBaseRepository
 from models.user_models import UserSQLModel
 from repositories.sql_connection import with_db_session, scoped_session
-from utilities.customExceptions import EntityNotFoundError
+from utilities.custom_exceptions import EntityNotFoundError
 
 
 class SQLUserRepository(SQLBaseRepository, UsersRepositoryInterface):

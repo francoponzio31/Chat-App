@@ -1,7 +1,7 @@
 from flask import request, jsonify, Response
 from services.messages_service import messages_service
 from marshmallow import ValidationError
-from utilities.customExceptions import UserIsNotInChat
+from utilities.custom_exceptions import UserIsNotInChat
 from utilities.logger import logger
 from utilities.validators import token_required
 

@@ -1,7 +1,7 @@
 from schemas.message_schema import message_schema, messages_schema
 from repositories import messages_repository
 from repositories import chat_members_repository
-from utilities.customExceptions import UserIsNotInChat
+from utilities.custom_exceptions import UserIsNotInChat
 
 
 class MessagesService:

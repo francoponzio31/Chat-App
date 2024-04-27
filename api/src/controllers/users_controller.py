@@ -1,7 +1,7 @@
 from flask import request, jsonify, Response
 from services.users_service import users_service
 from marshmallow import ValidationError
-from utilities.customExceptions import EntityNotFoundError, EmailAlreadyRegistered
+from utilities.custom_exceptions import EntityNotFoundError, EmailAlreadyRegistered
 from utilities.validators import token_required
 from utilities.logger import logger
 

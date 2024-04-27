@@ -1,10 +1,10 @@
+- integracion fileserver
 - CORS
 - manejo de zonas horarias
 - autorizacion, permisos
 - autenticacion por terceros
 - web sockets
 - cache
-- integracion fileserver
 - swagger
 - interfaz para admin
 - Mailing

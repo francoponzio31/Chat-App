@@ -1,6 +1,7 @@
 __pycache__/
 venv/
 *.db
+json_storage
 *data.json
 .env
 *.log*

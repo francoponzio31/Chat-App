@@ -1,7 +1,7 @@
 from repositories.users.users_repository_interface import UsersRepositoryInterface
 from repositories.json_base_repository import JSONBaseRepository
 from models.user_models import UserJSONModel
-from utilities.customExceptions import EntityNotFoundError
+from utilities.custom_exceptions import EntityNotFoundError
 
 
 class JSONUserRepository(JSONBaseRepository, UsersRepositoryInterface):

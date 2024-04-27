@@ -1,6 +1,6 @@
 from schemas.auth_schema import credentials_schema
 from repositories import users_repository
-from utilities.customExceptions import InvalidCredentials
+from utilities.custom_exceptions import InvalidCredentials
 from utilities.utils import compare_hashed_password
 from flask import current_app
 import datetime

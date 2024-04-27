@@ -1,6 +1,6 @@
 from schemas.contact_schema import contact_schema, contacts_schema
 from repositories import contacts_repository
-from utilities.customExceptions import ContactAlreadyRegisteredError
+from utilities.custom_exceptions import ContactAlreadyRegisteredError
 
 
 class ContactsService:

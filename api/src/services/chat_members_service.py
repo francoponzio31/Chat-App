@@ -1,6 +1,6 @@
 from schemas.chat_member_schema import chat_member_schema, chat_members_schema
 from repositories import chat_members_repository
-from utilities.customExceptions import MemberAlreadyInChat
+from utilities.custom_exceptions import MemberAlreadyInChat
 
 
 class ChatMembersService:

@@ -1,6 +1,6 @@
 from repositories import chats_repository
 from schemas.chat_schema import chat_schema, chats_schema
-from utilities.customExceptions import IsGroupModificationError, GroupNameModificationError
+from utilities.custom_exceptions import IsGroupModificationError, GroupNameModificationError
 
 
 class ChatsService:

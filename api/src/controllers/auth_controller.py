@@ -1,7 +1,7 @@
 from flask import request, jsonify, Response
 from services.auth_service import auth_service
 from marshmallow import ValidationError
-from utilities.customExceptions import InvalidCredentials
+from utilities.custom_exceptions import InvalidCredentials
 from utilities.logger import logger
 
 

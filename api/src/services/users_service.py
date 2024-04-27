@@ -1,6 +1,6 @@
 from schemas.user_schema import user_schema, users_schema
 from repositories import users_repository
-from utilities.customExceptions import EmailAlreadyRegistered
+from utilities.custom_exceptions import EmailAlreadyRegistered
 
 
 class UsersService:

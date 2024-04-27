@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from repositories.sql_connection import with_db_session, scoped_session
-from utilities.customExceptions import EntityNotFoundError
+from utilities.custom_exceptions import EntityNotFoundError
 
 
 class SQLBaseRepository(ABC):

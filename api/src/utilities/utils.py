@@ -2,7 +2,6 @@ import os
 from typing import Any
 from datetime import datetime
 import bcrypt
-import base64
 
 
 def get_env_value(key:str, default:Any=None) -> Any:

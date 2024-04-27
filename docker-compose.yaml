@@ -12,7 +12,7 @@ services:
       - ./api:/app
     ports:
       - 8080:8080
-    command: gunicorn --workers 4 --reload --log-level debug --bind $API_HOST:$API_PORT src.main:app
+    command: gunicorn --workers 4 --reload --log-level debug --bind 0.0.0.0:8080 src.main:app
     depends_on:
       - db
 
@@ -22,11 +22,23 @@ services:
       POSTGRES_USER: db_admin
       POSTGRES_PASSWORD: db_admin
     volumes:
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/postgress-init-db.sql
       - chat_app_db:/var/lib/postgresql
     ports:
       - 5432:5432
 
+  fileserver:
+    build:
+      context: ./fileserver
+      dockerfile: Dockerfile
+    volumes:
+      - ./fileserver:/app
+    env_file:
+      - ./fileserver/.env
+    ports:
+      - 8090:8000
+    command: uvicorn --host 0.0.0.0 --port 8000 src.app:app --reload
+  
   sonarqube:
     image: sonarqube:latest
     environment:

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from utilities.customExceptions import EntityNotFoundError
+from utilities.custom_exceptions import EntityNotFoundError
 from utilities.utils import json_decoder, json_encoder
 from dotenv import load_dotenv
 from utilities.utils import get_env_value
