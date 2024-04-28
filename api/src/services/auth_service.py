@@ -5,7 +5,6 @@ from utilities.utils import compare_hashed_password
 from flask import current_app
 import datetime
 import jwt
-import pytz
 
 
 class AuthService:
@@ -24,8 +23,8 @@ class AuthService:
                 "email": user.email,
                 "role": user.role,
             },
-            "iat": datetime.datetime.now(tz=pytz.timezone("UTC")),
-            "exp": datetime.datetime.now(tz=pytz.timezone("UTC")) + datetime.timedelta(hours=8),  # Token valid for 8 hours
+            "iat": datetime.datetime.now(),
+            "exp": datetime.datetime.now() + datetime.timedelta(hours=8),  # Token valid for 8 hours
         }
 
         token = jwt.encode(payload, current_app.config["JWT_KEY"], algorithm="HS256")

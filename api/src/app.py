@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from config.app_config import config
 from routers.utils import init_routes, register_error_handlers
 
@@ -9,6 +10,9 @@ def create_app() -> Flask:
 
     # CONFIG
     app.config.from_object(config)
+
+    # CORS
+    CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5173"]}})
 
     # DB
     if app.config["DATA_PERSISTENCE_TYPE"] == "SQL":

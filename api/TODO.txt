@@ -1,7 +1,5 @@
-- integracion fileserver
-- CORS
-- manejo de zonas horarias
 - autorizacion, permisos
+- user last_connection
 - autenticacion por terceros
 - web sockets
 - cache

@@ -20,7 +20,7 @@ services:
       POSTGRES_USER: db_admin
       POSTGRES_PASSWORD: db_admin
     volumes:
-      - ./init-db.sql:/docker-entrypoint-initdb.d/postgress-init-db.sql
+      - ./scripts/postgress-init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
       - chat_app_db:/var/lib/postgresql
     ports:
       - 5435:5432
