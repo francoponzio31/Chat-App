@@ -12,10 +12,10 @@ def create_app() -> Flask:
     app.config.from_object(config)
 
     # CORS
-    CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5173"]}})
+    CORS(app, resources={r"/api/*": {"origins": [config.CLIENT_BASE_URL]}})
 
     # DB
-    if app.config["DATA_PERSISTENCE_TYPE"] == "SQL":
+    if config.DATA_PERSISTENCE_TYPE == "SQL":
         from repositories.sql_connection import init_db
         with app.app_context():
             init_db()

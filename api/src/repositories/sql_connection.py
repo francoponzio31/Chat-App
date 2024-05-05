@@ -24,6 +24,9 @@ def create_db_session():
 
 
 def with_db_session(f):
+    """
+    Decorator that provide the decorated function with a unique db session instance.
+    """
     @wraps(f)
     def wrapper(*args, **kwargs):
         db_session = create_db_session()

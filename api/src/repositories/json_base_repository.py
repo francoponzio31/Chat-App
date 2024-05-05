@@ -11,6 +11,10 @@ T = TypeVar("T")
 
 class JSONBaseRepository(Generic[T], ABC):
 
+    """
+    This class provide function with the basic CRUD operations for a JSON file persistance repository  
+    """
+
     data_persistence_base_path = config.DATA_PERSISTENCE_PATH
 
     def __init__(self, filename):

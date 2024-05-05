@@ -6,7 +6,6 @@ app = FastAPI()
 
 app.include_router(files_router, prefix="/api/files")
 
-
 @app.get("/")
 async def index():
     return "app running!"

@@ -4,16 +4,16 @@ from utilities.utils import get_env_value
 
 load_dotenv()
 
-class BaseConfig:
-    
+class Config:
+
     ENV = get_env_value("ENV", "not_set")
 
     # APP
+    HOST = get_env_value("API_HOST", "127.0.0.1")
+    PORT = get_env_value("API_PORT", 8080)
     DEBUG = get_env_value("DEBUG", False)
     TESTING = get_env_value("TESTING", False)
     SECRET_KEY = get_env_value("SECRET_KEY", "not_set")
-    HOST = get_env_value("API_HOST", "127.0.0.1")
-    PORT = get_env_value("API_PORT", 8080)
     
     # AUTH
     JWT_KEY = get_env_value("JWT_KEY", "not_set")
@@ -26,18 +26,7 @@ class BaseConfig:
     
     # INTEGRATIONS
     FILESERVER_BASE_URL = get_env_value("FILESERVER_BASE_URL", "not_set")
+    CLIENT_BASE_URL = get_env_value("CLIENT_BASE_URL", "not_set")
 
 
-class DevelopmentConfig(BaseConfig):
-    ...
-
-
-class ProductionConfig(BaseConfig):
-    ...
-
-
-env = get_env_value("ENV")
-if env == "PROD":
-    config = ProductionConfig
-else:
-    config = DevelopmentConfig
+config = Config()

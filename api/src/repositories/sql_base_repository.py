@@ -8,6 +8,10 @@ T = TypeVar("T")
 
 class SQLBaseRepository(Generic[T], ABC):
 
+    """
+    This class provide function with the basic CRUD operations for a SQL persistance repository.
+    """
+
     @property
     @abstractmethod
     def Model(self) -> T:
