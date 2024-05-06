@@ -1,11 +1,8 @@
 from abc import ABC, abstractmethod
-import magic
 from typing import Literal, Awaitable
 
 
 class FilesRepositoryInterface(ABC):
-
-    mime = magic.Magic(mime=True)
 
     @abstractmethod
     async def get_file_by_id(self, file_id:str, format:Literal["bytes", "b64"]) -> Awaitable[tuple[bytes | str, str]]:

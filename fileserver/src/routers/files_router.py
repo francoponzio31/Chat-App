@@ -1,7 +1,7 @@
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import Response, JSONResponse
-from services.files_service import file_service as service
-from utilities.custom_exceptions import FileSizeExceededException, FileTypeNotAccepted
+from services.files_service import files_service as service
+from utilities.custom_exceptions import InvalidFileID, MaxFileSizeExceeded, FileTypeNotAccepted
 from schemas.schemas import FileUploadResponse, FileResponse, ErrorResponse, BaseResponse
 from utilities.logger import logger
 
@@ -13,6 +13,8 @@ async def get_file_by_id(file_id):
     try:
         file_content, filename, _ = await service.get_file_by_id(file_id, format="b64")
         return JSONResponse(content=FileResponse(message="File obtained successfully", content=file_content, filename=filename).model_dump())
+    except InvalidFileID as ex:
+        return JSONResponse(content=ErrorResponse(message=ex.message).model_dump(), status_code=400)
     except FileNotFoundError:
         return JSONResponse(content=ErrorResponse(message="File not found").model_dump(), status_code=404)
     except Exception as ex:
@@ -29,6 +31,8 @@ async def download_file_by_id(file_id):
             media_type=mime_type,
             headers={"Content-Disposition": f"attachment; filename={filename}"}
         )
+    except InvalidFileID as ex:
+        return JSONResponse(content=ErrorResponse(message=ex.message).model_dump(), status_code=400)
     except FileNotFoundError:
         return JSONResponse(content=ErrorResponse(message="File not found").model_dump(), status_code=404)
     except Exception as ex:
@@ -39,15 +43,18 @@ async def download_file_by_id(file_id):
 @files_router.post("", response_model=FileUploadResponse, tags=["files"])
 async def upload_file(file:UploadFile = File(...)):
     try:
-        file_id = await service.upload_file(file)
+        file_content = await file.read()
+        file_id = await service.upload_file(file_content)
         return JSONResponse(content=FileUploadResponse(message="File uploaded successfully", file_id=file_id).model_dump())
     except FileTypeNotAccepted as ex:
         return JSONResponse(content=ErrorResponse(message=ex.message).model_dump(), status_code=400)
-    except FileSizeExceededException as ex:
+    except MaxFileSizeExceeded as ex:
         return JSONResponse(content=ErrorResponse(message=ex.message).model_dump(), status_code=400)
     except Exception as ex:
         logger.exception(ex)
         return JSONResponse(content=ErrorResponse(message="Error uploading file").model_dump(), status_code=500)
+    finally:
+        await file.close()
 
 
 @files_router.delete("/{file_id}", response_model=BaseResponse, tags=["files"])

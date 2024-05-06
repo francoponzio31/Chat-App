@@ -7,3 +7,4 @@ fileserver/files
 .env
 *.log*
 .scannerwork
+.pytest_cache
