@@ -1,7 +1,5 @@
 -- create dbs
 CREATE DATABASE api_db;
-CREATE DATABASE sonarqube;
-
 
 -- create user
 DO $$
@@ -16,4 +14,3 @@ END
 $$;
 
 GRANT ALL PRIVILEGES ON DATABASE api_db TO db_admin;
-GRANT ALL PRIVILEGES ON DATABASE sonarqube TO db_admin;

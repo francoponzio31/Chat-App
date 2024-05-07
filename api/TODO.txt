@@ -1,9 +1,0 @@
-- autorizacion, permisos
-- user last_connection
-- autenticacion por terceros
-- web sockets
-- cache
-- swagger
-- interfaz para admin
-- Mailing
-- Tests de carga

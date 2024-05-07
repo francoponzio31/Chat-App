@@ -5,6 +5,7 @@ json_storage
 fileserver/files
 *data.json
 .env
-*.log*
+*.log
 .scannerwork
 .pytest_cache
+TODO.txt
