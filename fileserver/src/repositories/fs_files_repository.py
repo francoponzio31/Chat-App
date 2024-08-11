@@ -1,5 +1,4 @@
 from repositories.files_repository_interface import FilesRepositoryInterface
-from typing import Literal
 from uuid import uuid4
 import aiofiles
 import aiofiles.os as aio_os

@@ -1,7 +1,7 @@
 from repositories.fs_files_repository import FSFilesRepository
 from repositories.s3_files_repository import S3FilesRepository
 from config.app_config import config
-from utilities.utils import validate_file_id_format
+from utilities.utils import validate_uuid_format
 from utilities.custom_exceptions import InvalidFileID, MaxFileSizeExceeded, FileTypeNotAccepted
 import mimetypes
 import magic
@@ -18,7 +18,7 @@ class FileService:
 
 
     async def get_file_by_id(self, file_id:str, format:Literal["bytes", "b64"]) -> tuple[bytes | str, str]:
-        if not validate_file_id_format(file_id):
+        if not validate_uuid_format(file_id):
             raise InvalidFileID 
 
         file_content = await self.repository.get_file_by_id(file_id)

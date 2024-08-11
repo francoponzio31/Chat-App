@@ -1,0 +1,16 @@
+.selectable {
+    cursor: pointer;
+}
+
+.selectable:hover {
+    filter: brightness(0.9);
+    transition: filter 0.3s ease;
+}
+
+
+.floating-btn {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 1000;
+}

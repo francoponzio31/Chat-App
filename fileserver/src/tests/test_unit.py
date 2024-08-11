@@ -1,7 +1,6 @@
 import pytest
-import re
 from services.files_service import files_service
-from utilities.utils import validate_file_id_format
+from utilities.utils import validate_uuid_format
 
 
 @pytest.mark.asyncio
@@ -10,7 +9,7 @@ async def test_files_service(test_image_content):
 
     # Upload a file
     file_id = await files_service.upload_file(test_image_content)
-    assert validate_file_id_format(file_id) == True
+    assert validate_uuid_format(file_id) == True
 
     # Get uploaded file
     file_content, filename, mime_type = await files_service.get_file_by_id(file_id, format="bytes")

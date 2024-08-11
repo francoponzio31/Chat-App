@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; padding: 20px; margin: 0;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border: 1px solid #e0e0e0;">
+        <h1 style="font-size: 24px; color: #333333;">Hello, {{ username }}!</h1>
+        <p style="font-size: 16px; color: #555555;">Thank you for registering. Please click the button below to verify your email address and activate your Chat App account.</p>
+        <div style="text-align: center;">
+            <a href="{{ app_client_url }}/verify-email?token={{ verification_token }}" style="display: inline-block; padding: 12px 24px; font-size: 16px; font-weight: bold; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px; margin-top: 20px;">Verify Email</a>
+        </div>
+        <p style="font-size: 14px; color: #777777;">If you didn't create an account, please ignore this email.</p>
+    </div>
+</body>
+</html>

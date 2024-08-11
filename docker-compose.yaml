@@ -1,18 +1,56 @@
 version: "3.9"
+
 services:
-  api:
+
+  chat_api:
     build:
-      context: ./api
+      context: ./chat_api
       dockerfile: Dockerfile
     env_file:
-      - ./api/.env
+      - ./chat_api/.env
     volumes:
-      - ./api:/app
+      - ./chat_api:/app
     ports:
       - 8080:8080
-    command: gunicorn --workers 4 --reload --log-level debug --bind 0.0.0.0:8080 src.main:app
+      - 5678:5678
+    command: /app/startup_local.sh
     depends_on:
       - db
+
+  fileserver:
+    build:
+      context: ./fileserver
+      dockerfile: Dockerfile
+    volumes:
+      - ./fileserver:/app
+    env_file:
+      - ./fileserver/.env
+    ports:
+      - 8090:8000
+      - 5679:5678
+    command: /app/startup_local.sh
+
+  mailer_api:
+    build:
+      context: ./mailer
+      dockerfile: Dockerfile.api
+    volumes:
+      - ./mailer:/app
+    env_file:
+      - ./mailer/.env
+    ports:
+      - 8100:8000
+      - 5680:5678
+    command: /app/startup_local.sh
+
+  mailer_celery:
+    build:
+      context: ./mailer
+      dockerfile: Dockerfile.celery
+    volumes:
+      - ./mailer:/app
+    env_file:
+      - ./mailer/.env
 
   db:
     image: postgres:16
@@ -25,17 +63,15 @@ services:
     ports:
       - 5435:5432
 
-  fileserver:
-    build:
-      context: ./fileserver
-      dockerfile: Dockerfile
+  redis:
+    image: redis:latest
+    container_name: redis-server
+    restart: always
     volumes:
-      - ./fileserver:/app
-    env_file:
-      - ./fileserver/.env
+      - chat_app_redis:/data
     ports:
-      - 8090:8000
-    command: uvicorn --host 0.0.0.0 --port 8000 src.app:app --reload
+      - 6379:6379
 
 volumes:
   chat_app_db:
+  chat_app_redis:
