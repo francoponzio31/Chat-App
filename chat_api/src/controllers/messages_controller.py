@@ -3,7 +3,7 @@ from services.messages_service import messages_service
 from marshmallow import ValidationError
 from utilities.custom_exceptions import UserIsNotInChatError
 from utilities.logger import logger
-from chat_api.src.auth.validators import login_required
+from auth.validators import login_required
 
 class MessagesController:
 

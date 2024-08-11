@@ -1,14 +1,13 @@
-from schemas.auth_schema import credentials_schema, current_user_schema
+from schemas.auth_schema import credentials_schema, email_validation_schema, current_user_schema
 from schemas.user_schema import user_schema
 from repositories import users_repository
-from utilities.custom_exceptions import InvalidCredentialsError, EmailNotVerifiedError, EmailAlreadyRegisteredError
+from utilities.custom_exceptions import InvalidCredentialsError, EmailNotVerifiedError, EmailAlreadyRegisteredError, InvalidVerificationTokenError
 from utilities.utils import compare_hashed_password
 from integrations.mailer_client import mailer_client
 from flask import current_app
 import datetime
 import jwt
 from config.app_config import config
-
 
 
 class AuthService:
@@ -56,11 +55,24 @@ class AuthService:
             subject="Chat app email verification",
             template="validate_signup.html",
             template_context={
+                "user_id": new_user.id,
                 "username": new_user.username,
                 "app_client_url": config.CLIENT_BASE_URL,
                 "verification_token": new_user.verification_token
             }
         )
+
+
+    def verify_email(self, email_validation_data:dict):
+        email_validation_data = email_validation_schema.load(email_validation_data)
+        user_id = email_validation_data["user_id"]
+        verification_token = email_validation_data["token"]
+
+        user = users_repository.get_by_id(user_id)
+        if user.verification_token == verification_token:
+            users_repository.update_one(user_id, {"is_verified": True})
+        else:
+            raise InvalidVerificationTokenError
 
 
     def current_user(self, user_id:int) -> dict:

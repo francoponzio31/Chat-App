@@ -1,5 +1,5 @@
 import { useState, useRef } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import authService from "../services/auth"
@@ -11,21 +11,10 @@ export default function Login(){
 
     const authContext = useAuth()
     const navigate = useNavigate()
-
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
     const emailInputRef = useRef(null)
     const passwordInputRef = useRef(null)
     const formRef = useRef(null)
     const [error, setError] = useState(null)
-
-    function handleEmailInputChange(){
-        setEmail(emailInputRef.current.value)
-    }
-
-    function handlePasswordInputChange(){
-        setPassword(passwordInputRef.current.value)
-    }
 
     async function handleLogin(event){
         if (!formRef.current.reportValidity()){
@@ -34,16 +23,19 @@ export default function Login(){
         event.preventDefault()
         
         try {
-            const response = await authService.login(email, password)
+            const response = await authService.login(emailInputRef.current.value, passwordInputRef.current.value)
             authContext.login(response.token)
             setError("")
             navigate("/")
-        } catch (error) {
-            if (error.status === 400){
+        } catch (error) {          
+            if (error.response.status === 400){
                 setError("Invalid data")
             }
-            else if (error.status === 401){
+            else if (error.response.status === 401){
                 setError("Invalid username or password")
+            }
+            else if (error.response.status === 403){
+                setError("Unverified email")
             }
             else {
                 setError("Sorry, an error has occurred. Please try again")
@@ -61,19 +53,23 @@ export default function Login(){
 
             <h3 className="mt-5 mb-4 fs-1">Login</h3>
             <Form ref={formRef}>
-                <Form.Group className="mb-3" controlId="LoginFormEmail">
+                <Form.Group className="mb-3">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" required value={email} onChange={handleEmailInputChange} ref={emailInputRef}/>
+                    <Form.Control type="email" placeholder="Enter email" required ref={emailInputRef}/>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="LoginFormPassword">
+                <Form.Group className="mb-3">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Enter password" required value={password} onChange={handlePasswordInputChange} ref={passwordInputRef} />
+                    <Form.Control type="password" placeholder="Enter password" required ref={passwordInputRef} />
                 </Form.Group>
                 {error && <p className="text-danger">{error}</p>}
                 <Button variant="primary" type="submit" onClick={handleLogin} >
                     Submit
                 </Button>
             </Form>
+
+            <div className="mt-3">
+                <Link to="/signup" className="text-decoration-none">Create a new account</Link>
+            </div>
         </div>
     )
 }

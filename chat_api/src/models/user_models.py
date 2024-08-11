@@ -6,7 +6,7 @@ from uuid import uuid4
 
 class User:
 
-    def __init__(self, email, username, password, role="user", creation_date=None, picture_id=None, is_verified=False):
+    def __init__(self, email, username, password, role="user", verification_token=None, creation_date=None, picture_id=None, is_verified=False):
         self.email = email
         self.username = username
         self.password = password
@@ -14,7 +14,7 @@ class User:
         self.picture_id = picture_id
         self.creation_date = creation_date or datetime.now()
         self.is_verified = is_verified
-        self.verification_token = str(uuid4())
+        self.verification_token = verification_token or str(uuid4())
         
     def __repr__(self):
         return f"<User {self.email}>"
@@ -35,8 +35,8 @@ class UserSQLModel(User, BaseModel):
 
 class UserJSONModel(User):
 
-    def __init__(self, id, email, username, password, role="user", creation_date=None, picture_id=None, is_verified=False):
-        super().__init__(email, username, password, role, creation_date, picture_id, is_verified)
+    def __init__(self, id, email, username, password, role="user", verification_token=None,  creation_date=None, picture_id=None, is_verified=False):
+        super().__init__(email, username, password, role, verification_token, creation_date, picture_id, is_verified)
         self.id = id
 
     def to_dict(self) -> dict:

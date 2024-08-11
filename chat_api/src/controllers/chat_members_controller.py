@@ -2,7 +2,7 @@ from flask import request, jsonify, Response
 from services.chat_members_service import chat_members_service
 from utilities.custom_exceptions import EntityNotFoundError, MemberAlreadyInChatError
 from marshmallow import ValidationError
-from chat_api.src.auth.validators import login_required
+from auth.validators import login_required
 from utilities.logger import logger
 
 

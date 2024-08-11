@@ -21,7 +21,7 @@ export default function Navbar(){
             try {
                 const response = await authService.current(authContext.token)
                 setUsername(response.user.username)
-            } catch (error) {   // TODO: pulir el manejo de errores, en especial ucando se vence el JWT
+            } catch (error) {
                 console.error("Error fetching current user:", error)
                 navigate("/login")
             }
@@ -39,25 +39,23 @@ export default function Navbar(){
     }
 
     return (
-        <>
-            <BSNavbar expand="lg" className="bg-body-tertiary">
-                <Container>
-                    <BSNavbar.Brand className="d-flex align-items-center gap-2" onClick={handleHomeRedirect} style={{cursor:"pointer"}}>
-                        <FontAwesomeIcon icon={faRocketchat} size="lg"/>
-                        Chat app
-                    </BSNavbar.Brand>
-                    <Nav className="d-flex align-items-center gap-3">
-                        <Nav.Link href="/profile" className="d-flex align-items-center gap-2">
-                            <FontAwesomeIcon icon={faUser} />
-                            {username}
-                        </Nav.Link>
-                        <Nav.Link className="d-flex align-items-center gap-2" onClick={handleLogout}>
-                            <FontAwesomeIcon icon={faPowerOff} />
-                            Logout
-                        </Nav.Link>
-                    </Nav>
-                </Container>
-            </BSNavbar>
-        </>
+        <BSNavbar expand="lg" className="bg-body-tertiary">
+            <Container>
+                <BSNavbar.Brand className="d-flex align-items-center gap-2" onClick={handleHomeRedirect} style={{cursor:"pointer"}}>
+                    <FontAwesomeIcon icon={faRocketchat} size="lg"/>
+                    Chat app
+                </BSNavbar.Brand>
+                <Nav className="d-flex align-items-center gap-3">
+                    <Nav.Link href="/profile" className="d-flex align-items-center gap-2">
+                        <FontAwesomeIcon icon={faUser} />
+                        {username}
+                    </Nav.Link>
+                    <Nav.Link className="d-flex align-items-center gap-2" onClick={handleLogout}>
+                        <FontAwesomeIcon icon={faPowerOff} />
+                        Logout
+                    </Nav.Link>
+                </Nav>
+            </Container>
+        </BSNavbar>
     )
 }

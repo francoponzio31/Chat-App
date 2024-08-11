@@ -2,7 +2,7 @@ from flask import request, jsonify, Response
 from services.contacts_service import contacts_service
 from marshmallow import ValidationError
 from utilities.custom_exceptions import EntityNotFoundError, ContactAlreadyRegisteredError
-from chat_api.src.auth.validators import login_required
+from auth.validators import login_required
 from utilities.logger import logger
 
 

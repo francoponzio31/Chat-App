@@ -6,6 +6,8 @@ class EmailNotVerifiedError(Exception): pass
 
 class EmailAlreadyRegisteredError(Exception): pass
 
+class InvalidVerificationTokenError(Exception): pass
+
 class IsGroupModificationError(Exception): pass
 
 class GroupNameModificationError(Exception): pass

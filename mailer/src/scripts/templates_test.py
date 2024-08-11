@@ -16,6 +16,7 @@ if __name__ == "__main__":
     
     template_filename = "validate_signup.html"
     template_context = {
+        "user_id": 1,
         "username": "username",
         "app_client_url": "client_url",
         "verification_token": "test_token"
