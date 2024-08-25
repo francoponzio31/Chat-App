@@ -2,7 +2,8 @@ __pycache__/
 venv/
 *.db
 json_storage
-fileserver/files
+/app/fileserver/files/*
+!/app/fileserver/files/
 *data.json
 .env
 *.log

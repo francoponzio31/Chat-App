@@ -19,6 +19,7 @@
 **/compose*
 **/Dockerfile*
 **/node_modules
+**/package-lock.json
 **/npm-debug.log
 **/obj
 **/secrets.dev.yaml

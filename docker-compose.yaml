@@ -4,12 +4,12 @@ services:
 
   chat_api:
     build:
-      context: ./chat_api
+      context: ./app/chat_api
       dockerfile: Dockerfile
     env_file:
-      - ./chat_api/.env
+      - ./app/chat_api/.env
     volumes:
-      - ./chat_api:/app
+      - ./app/chat_api:/app
     ports:
       - 8080:8080
       - 5678:5678
@@ -17,14 +17,27 @@ services:
     depends_on:
       - db
 
+  chat_client:
+    build:
+      context: ./app/chat_client
+      dockerfile: Dockerfile.prod
+    env_file:
+      - ./app/chat_client/.env
+    volumes:
+      - ./app/chat_client/dist:/usr/share/nginx/html
+      - chat_app_files:/usr/share/nginx/html/files
+    ports:
+      - 8000:80
+
   fileserver:
     build:
-      context: ./fileserver
+      context: ./app/fileserver
       dockerfile: Dockerfile
     volumes:
-      - ./fileserver:/app
+      - ./app/fileserver:/app
+      - chat_app_files:/app/files
     env_file:
-      - ./fileserver/.env
+      - ./app/fileserver/.env
     ports:
       - 8090:8000
       - 5679:5678
@@ -32,12 +45,12 @@ services:
 
   mailer_api:
     build:
-      context: ./mailer
+      context: ./app/mailer
       dockerfile: Dockerfile.api
     volumes:
-      - ./mailer:/app
+      - ./app/mailer:/app
     env_file:
-      - ./mailer/.env
+      - ./app/mailer/.env
     ports:
       - 8100:8000
       - 5680:5678
@@ -45,12 +58,12 @@ services:
 
   mailer_celery:
     build:
-      context: ./mailer
+      context: ./app/mailer
       dockerfile: Dockerfile.celery
     volumes:
-      - ./mailer:/app
+      - ./app/mailer:/app
     env_file:
-      - ./mailer/.env
+      - ./app/mailer/.env
 
   db:
     image: postgres:16
@@ -58,7 +71,7 @@ services:
       POSTGRES_USER: db_admin
       POSTGRES_PASSWORD: db_admin
     volumes:
-      - ./scripts/postgress-init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./app/scripts/postgress-init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
       - chat_app_db:/var/lib/postgresql
     ports:
       - 5435:5432
@@ -75,3 +88,4 @@ services:
 volumes:
   chat_app_db:
   chat_app_redis:
+  chat_app_files:

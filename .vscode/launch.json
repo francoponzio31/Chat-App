@@ -11,7 +11,7 @@
             },
             "pathMappings": [
                 {
-                    "localRoot": "${workspaceFolder}/chat_api/src",
+                    "localRoot": "${workspaceFolder}/app/chat_api/src",
                     "remoteRoot": "/app/src"
                 }
             ],
@@ -27,7 +27,7 @@
             },
             "pathMappings": [
                 {
-                    "localRoot": "${workspaceFolder}/fileserver/src",
+                    "localRoot": "${workspaceFolder}/app/fileserver/src",
                     "remoteRoot": "/app/src"
                 }
             ],
