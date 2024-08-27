@@ -1,4 +1,4 @@
 EXECUTE ALEMBIC MIGRATIONS:
 
-- alembic revision --autogenerate -m "Desctiption"
+- alembic revision --autogenerate -m "Description"
 - alembic upgrade head

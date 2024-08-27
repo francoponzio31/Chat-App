@@ -5,7 +5,7 @@ from models.chat_member_models import ChatMember
 class ChatMembersRepositoryInterface(ABC):
 
     @abstractmethod
-    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> list[ChatMember]:
+    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> tuple[list[ChatMember], int]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 

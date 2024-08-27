@@ -10,8 +10,6 @@ class InvalidVerificationTokenError(Exception): pass
 
 class GroupNameModificationError(Exception): pass
 
-class ContactAlreadyRegisteredError(Exception): pass
-
 class MemberAlreadyInChatError(Exception): pass
 
 class UserIsNotInChatError(Exception): pass

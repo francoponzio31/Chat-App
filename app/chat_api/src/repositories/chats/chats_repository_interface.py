@@ -5,7 +5,7 @@ from models.chat_models import Chat
 class ChatsRepositoryInterface(ABC):
 
     @abstractmethod
-    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> list[Chat]:
+    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> tuple[list[Chat], int]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 

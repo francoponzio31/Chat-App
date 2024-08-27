@@ -5,7 +5,7 @@ from models.message_models import Message
 class MessagesRepositoryInterface(ABC):
 
     @abstractmethod
-    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> list[Message]:
+    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> tuple[list[Message], int]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 

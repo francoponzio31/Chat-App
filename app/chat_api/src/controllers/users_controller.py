@@ -13,9 +13,9 @@ class UsersController:
     def get_users(self) -> tuple[Response, int]:
         try:
             search_params = user_search_params_schema.load(request.args)
-            users = users_service.get_users(**search_params)
-            users_output = users_output_schema.dump(users)
-            return jsonify({"success": True, "message": "Successful search", "users": users_output}), 200
+            users_result, total_users = users_service.get_users(**search_params)
+            users_output = users_output_schema.dump(users_result)
+            return jsonify({"success": True, "message": "Successful search", "users": users_output, "total_users": total_users}), 200
         except Exception as ex:
             logger.exception(str(ex))
             return jsonify({"success": False, "message": "Error getting users"}), 500

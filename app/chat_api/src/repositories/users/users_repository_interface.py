@@ -5,7 +5,7 @@ from models.user_models import User
 class UsersRepositoryInterface(ABC):
 
     @abstractmethod
-    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> list[User]:
+    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> tuple[list[User], int]:
         raise NotImplementedError("Implement this method on all subclasses.")
 
 

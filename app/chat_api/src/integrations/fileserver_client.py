@@ -43,10 +43,25 @@ class FileserverClient:
         response = requests.get(url, headers=headers)
 
         if response.status_code != 200:
+            logger.error(f"Fileserver error response: {response.json()}")
             raise HTTPError
 
         file_data = response.json()
         return file_data["content"]
+
+
+    def delete_file(self, file_id:str):
+        """
+        Delete the file with the given id.
+        """
+        url = f"{self.fileserver_url}/api/files/{file_id}"
+        response = requests.delete(url)
+
+        if response.status_code != 200:
+            logger.error(f"Fileserver error response: {response.json()}")
+            raise HTTPError
+
+        logger.error(f"Fileserver delete file response: {response.json()}")
 
 
 fs_client = FileserverClient()

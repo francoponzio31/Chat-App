@@ -27,6 +27,7 @@ class Config:
     # INTEGRATIONS
     FILESERVER_BASE_URL = get_env_value("FILESERVER_BASE_URL", "not_set")
     MAILER_BASE_URL = get_env_value("MAILER_BASE_URL", "not_set")
+    CLIENT_BASE_URL = get_env_value("CLIENT_BASE_URL", "not_set")
 
 
 config = Config()

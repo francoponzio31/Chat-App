@@ -1,0 +1,13 @@
+FROM node:18.17-alpine
+
+WORKDIR /app
+
+ENV ENV_MODE=DEV
+
+COPY ./package.json /app
+
+RUN npm install
+
+EXPOSE 5173
+
+CMD ["npm", "run", "dev"]

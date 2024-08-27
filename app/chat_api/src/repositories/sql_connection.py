@@ -53,7 +53,6 @@ def init_db():
 
     # import sql models here to create they tables
     from models.user_models import UserSQLModel
-    from models.contact_models import Contact
     from models.chat_models import Chat
     from models.chat_member_models import ChatMember
     from models.message_models import Message

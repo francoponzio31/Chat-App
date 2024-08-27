@@ -6,9 +6,7 @@ import Spinner from "react-bootstrap/Spinner"
 export default function ProfileCard({username, userEmail, profilePicture, loading}){
 
     return (
-        <Card body className="">
-
-            
+        <Card body className="bg-dark-subtle border-dark-subtle">
             <div className="d-flex gap-3 align-items-center">
                 {
                     loading ? (

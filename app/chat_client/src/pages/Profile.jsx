@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react"
-import { useNavigate } from "react-router-dom"
 import authService from "../services/auth.js"
 import userService from "../services/users.js"
 import ProfileCard from "../components/ProfileCard.jsx"
@@ -11,19 +10,15 @@ import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Modal from "react-bootstrap/Modal"
 import Spinner from "react-bootstrap/Spinner"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons"
 import "../index.css"
 
 
 export default function Profile() {
 
-    const navigate = useNavigate()
     const authContext = useAuth()
 
     const [loadingUserData, setLoadingUserData] = useState(true)
     const [updatingUserData, setUpdatingUserData] = useState(false)
-    const [reloadUserData, setReloadUserData] = useState(false)
     const [showModal, setShowModal] = useState(false)
 
     const [username, setUsername] = useState("")
@@ -33,6 +28,26 @@ export default function Profile() {
 
     const usernameInputRef = useRef(null)
     const pictureInputRef = useRef(null)
+    
+    async function getCurrentUser(){
+        setLoadingUserData(true)
+        try {
+            console.log("Fetching current user")
+            const response = await authService.current(authContext.token)
+            setUsername(response.user.username)
+            setUserEmail(response.user.email)
+            setUserId(response.user.id)
+            const profilePictureFile = await getUserPictureFilename(response.user.picture_id)
+            setProfilePicture(profilePictureFile)
+            setLoadingUserData(false)
+        } catch (error) {
+            console.error("Error fetching current user:", error)
+        }
+    }
+
+    useEffect(() => {
+        getCurrentUser()
+    }, [])
     
     const handleShowModal = () => {
         setShowModal(true)
@@ -72,43 +87,18 @@ export default function Profile() {
         }
 
         if (dataUpdated){
-            setReloadUserData(!reloadUserData)
+            getCurrentUser()
         }
 
         setUpdatingUserData(false)
         handleClose()
     }
     
-    useEffect(() => {
-        async function getCurrentUser(){
-            setLoadingUserData(true)
-            try {
-                console.log("Fetching current user")
-                const response = await authService.current(authContext.token)
-                setUsername(response.user.username)
-                setUserEmail(response.user.email)
-                setUserId(response.user.id)
-                const profilePictureFile = await getUserPictureFilename(response.user.picture_id)
-                setProfilePicture(profilePictureFile)
-                setLoadingUserData(false)
-            } catch (error) {
-                console.error("Error fetching current user:", error)
-            }
-        }
-        getCurrentUser()
-    }, [reloadUserData])
-
-    const handleHomeRedirect = () => {
-        navigate("/")
-    }
-
     return <>
         <Navbar/>
-
-        <FontAwesomeIcon icon={faChevronLeft} onClick={handleHomeRedirect} className="selectable mt-4 ms-5 mb-2" style={{ fontSize: "1.8em" }}/>
         
         <Container className="">
-            <h2 className="mb-3">Profile</h2>
+            <h3 className="my-3">Profile</h3>
 
             <ProfileCard username={username} userEmail={userEmail} profilePicture={profilePicture} loading={loadingUserData}/>
             

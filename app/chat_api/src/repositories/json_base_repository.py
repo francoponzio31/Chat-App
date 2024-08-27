@@ -5,6 +5,7 @@ from config.app_config import config
 import json
 import os
 from typing import Generic, TypeVar
+import copy
 
 
 T = TypeVar("T")
@@ -51,7 +52,7 @@ class JSONBaseRepository(Generic[T], ABC):
         return True
 
 
-    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> list[T]:
+    def get_all(self, limit=None|int, offset=None|int, **kwargs) -> tuple[list[T], int]:
         objs = self._load_data()
 
         filtered_objs = [obj for obj in objs if self._matches_query_filter(obj, **kwargs)]
@@ -61,7 +62,7 @@ class JSONBaseRepository(Generic[T], ABC):
         if limit is not None:
             filtered_objs = filtered_objs[:limit]
 
-        return [self.Model.from_dict(obj) for obj in objs]
+        return [self.Model.from_dict(obj) for obj in objs], len(objs)
 
 
     def get_by_id(self, id:int) -> T:
@@ -85,9 +86,10 @@ class JSONBaseRepository(Generic[T], ABC):
         return new_obj
 
 
-    def update_one(self, id:int, **kwargs) -> T:
+    def update_one(self, id:int, return_original:bool=False, **kwargs) -> T:
         objs = self.get_all()
         obj = self.get_by_id(id)
+        original_obj = copy.deepcopy(obj)
         for key, value in kwargs.items():
             setattr(obj, key, value) 
         for index, u in enumerate(objs):
@@ -95,7 +97,7 @@ class JSONBaseRepository(Generic[T], ABC):
                 objs[index] = obj
                 break
         self._save_data([obj.to_dict() for obj in objs])
-        return obj
+        return original_obj if return_original else obj
 
 
     def delete_one(self, id:int) -> None:

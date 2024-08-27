@@ -4,7 +4,7 @@ from integrations.fileserver_client import fs_client
 
 class UsersService:
         
-    def get_users(self, limit:int|None=None, offset:int|None=None, username:str|None=None) -> list[dict]:
+    def get_users(self, limit:int|None=None, offset:int|None=None, username:str|None=None) -> tuple[list[dict], int]:
         return users_repository.get_all(offset=offset, limit=limit, username=username)
   
 
@@ -25,9 +25,14 @@ class UsersService:
 
 
     def update_user_picture(self, user_id:int, content:bytes, filename:str) -> str:
-        file_id = fs_client.upload_file(content, filename)
-        user = users_repository.update_one(user_id, picture_id=file_id)
-        return user.picture_id
+        new_picture_file_id = fs_client.upload_file(content, filename)
+        user_before_update = users_repository.update_one(user_id, picture_id=new_picture_file_id, return_original=True)
+        
+        older_picture_file_id = user_before_update.picture_id
+        if older_picture_file_id:
+            fs_client.delete_file(older_picture_file_id)
+        
+        return user_before_update.picture_id
 
 
     def delete_user(self, user_id:int) -> None:
