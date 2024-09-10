@@ -1,6 +1,8 @@
-from flask import request, jsonify, Response
+from flask import request, Response
+from http import HTTPStatus
 from schemas.chat_schemas import create_chat_body_schema, update_chat_body_schema, chat_output_schema, chats_output_schema
 from services.chats_service import chats_service
+from utilities.responses import get_success_response, get_error_response
 from utilities.custom_exceptions import EntityNotFoundError, GroupNameModificationError
 from marshmallow import ValidationError
 from auth.validators import login_required
@@ -14,10 +16,10 @@ class ChatsController:
         try:
             chats = chats_service.get_user_chats(user_id)
             chats_output = chats_output_schema.dump(chats)
-            return jsonify({"success": True, "message": "Successful search", "chats": chats_output}), 200
+            return get_success_response(status=HTTPStatus.OK.value, message="Successful search", chats=chats_output)
         except Exception as ex:
             logger.exception(str(ex))
-            return jsonify({"success": False, "message": "Error getting chats"}), 500
+            return get_error_response(status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
 
 
     @login_required
@@ -27,12 +29,12 @@ class ChatsController:
             new_chat_data = create_chat_body_schema.load(request.json)
             new_chat = chats_service.create_chat(**new_chat_data)
             new_chat_output = chat_output_schema.dump(new_chat)
-            return jsonify({"success": True, "message": "Successful creation", "chat": new_chat_output}), 200
+            return get_success_response(status=HTTPStatus.CREATED.value, message="Successful creation", chat=new_chat_output)
         except ValidationError as ex:
-            return jsonify({"success": False, "message": f"Invalid data: {ex.messages}"}), 400
+            return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except Exception as ex:
             logger.exception(str(ex))
-            return jsonify({"success": False, "message": "Error creating chat"}), 500
+            return get_error_response(status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
 
 
     @login_required
@@ -41,16 +43,16 @@ class ChatsController:
             updated_chat_data = update_chat_body_schema.load(request.json, partial=True)
             updated_chat = chats_service.update_chat(chat_id, **updated_chat_data)
             updated_chat_output = chat_output_schema.dump(updated_chat)
-            return jsonify({"success": True, "message": "Successful update", "chat": updated_chat_output}), 200
-        except GroupNameModificationError:
-            return jsonify({"success": False, "message": "The chat is not a group."}), 400
+            return get_success_response(status=HTTPStatus.OK.value, message="Successful update", chat=updated_chat_output)
         except ValidationError as ex:
-            return jsonify({"success": False, "message": f"Invalid data: {ex.messages}"}), 400
+            return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
+        except GroupNameModificationError:
+            return get_error_response(status=HTTPStatus.CONFLICT.value, message=f"Chat with id {chat_id} is not a group")
         except EntityNotFoundError:
-            return jsonify({"success": False, "message": f"Chat with id {chat_id} not found"}), 400
+            return get_error_response(status=HTTPStatus.NOT_FOUND.value, message=f"Chat with id {chat_id} not found")
         except Exception as ex:
             logger.exception(str(ex))
-            return jsonify({"success": False, "message": "Error updating chat"}), 500
+            return get_error_response(status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
 
 
 chats_controller = ChatsController()

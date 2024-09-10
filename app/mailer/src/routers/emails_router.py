@@ -12,7 +12,7 @@ emails_router = APIRouter()
 async def send_email(email_data: EmailDataInput = Body(...)):
     try:
         await service.send_email(email_data)
-        return JSONResponse(content=BaseResponse(success=True, message="Email sent successfully").model_dump())
+        return JSONResponse(content=BaseResponse(success=True, message="Email sent successfully").model_dump(), status_code=202)
     except Exception as ex:
         logger.exception(ex)
         return JSONResponse(content=ErrorResponse(success=False, message="Error sending email").model_dump(), status_code=500)

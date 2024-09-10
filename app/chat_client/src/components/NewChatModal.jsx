@@ -26,7 +26,7 @@ export default function NewChatModal({showChatModal, setShowChatModal}){
         setLoading(true)
         const response = await userService.search(searchLimit, offset, search, authContext.token)
         setUsersSearchResult(response.users)
-        setPageAmount(Math.ceil(response.total_users / searchLimit))        
+        setPageAmount(Math.ceil(response.totalCount / searchLimit))        
         setLoading(false)
     }
 
@@ -82,7 +82,7 @@ export default function NewChatModal({showChatModal, setShowChatModal}){
                                                 userId={user.id}
                                                 username={user.username}
                                                 email={user.email}
-                                                pictureId={user.picture_id}
+                                                pictureId={user.pictureId}
                                             />
                                         ))}
                                     </div>           

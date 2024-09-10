@@ -37,7 +37,7 @@ export default function Profile() {
             setUsername(response.user.username)
             setUserEmail(response.user.email)
             setUserId(response.user.id)
-            const profilePictureFile = await getUserPictureFilename(response.user.picture_id)
+            const profilePictureFile = await getUserPictureFilename(response.user.pictureId)
             setProfilePicture(profilePictureFile)
             setLoadingUserData(false)
         } catch (error) {

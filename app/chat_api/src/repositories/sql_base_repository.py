@@ -33,7 +33,7 @@ class SQLBaseRepository(Generic[T], ABC):
                 # Apply equality filter for other data types
                 query = query.filter_by(**{key: value})
 
-        total_records = query.count()
+        total_count = query.count()
 
         if offset is not None:
             query = query.offset(offset)
@@ -41,7 +41,7 @@ class SQLBaseRepository(Generic[T], ABC):
         if limit is not None:
             query = query.limit(limit)
         
-        return query.all(), total_records
+        return query.all(), total_count
 
 
     @with_db_session

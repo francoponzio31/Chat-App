@@ -37,8 +37,7 @@ class AuthService{
 
     async verifyEmail(userId, token){
         try {
-            const response = await axios.post(`${this.apiPrefix}/verify-email`, {
-                "user_id": userId,
+            const response = await axios.post(`${this.apiPrefix}/verify-email/${userId}`, {
                 "token": token,
             })
             return response.data

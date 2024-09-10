@@ -25,7 +25,7 @@ class MailerClient:
         }
         response = requests.post(url, headers=headers, json=body)
 
-        if response.status_code != 200:
+        if not response.ok:
             logger.error(f"Mailer api error response: {response.json()}")
             raise HTTPError
 

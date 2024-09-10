@@ -61,7 +61,7 @@ async def upload_file(file:UploadFile = File(...)):
 async def delete_file_by_id(file_id):
     try:
         await service.delete_file_by_id(file_id)
-        return JSONResponse(content=BaseResponse(success=True, message="File deleted successfully").model_dump())
+        return JSONResponse(content=BaseResponse(success=True, message="File deleted successfully").model_dump(), status_code=200)
     except FileNotFoundError:
         return JSONResponse(content=ErrorResponse(message="File not found").model_dump(), status_code=404)
     except Exception as ex:

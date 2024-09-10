@@ -24,7 +24,7 @@ class FileserverClient:
         }
         response = requests.post(url, headers=headers, files=file)
 
-        if response.status_code != 200:
+        if not response.ok:
             logger.error(f"Fileserver error response: {response.json()}")
             raise HTTPError
 
@@ -42,7 +42,7 @@ class FileserverClient:
         }
         response = requests.get(url, headers=headers)
 
-        if response.status_code != 200:
+        if not response.ok:
             logger.error(f"Fileserver error response: {response.json()}")
             raise HTTPError
 
@@ -57,7 +57,7 @@ class FileserverClient:
         url = f"{self.fileserver_url}/api/files/{file_id}"
         response = requests.delete(url)
 
-        if response.status_code != 200:
+        if not response.ok:
             logger.error(f"Fileserver error response: {response.json()}")
             raise HTTPError
 
