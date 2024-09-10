@@ -17,7 +17,7 @@ class UsersController:
             search_params = user_search_params_schema.load(request.args)
             users_result, total_count = users_service.get_users(**search_params)
             users_output = users_output_schema.dump(users_result)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful search", users=users_output, total_count=total_count)
+            return get_success_response(status=HTTPStatus.OK.value, users=users_output, total_count=total_count)
         except Exception as ex:
             logger.exception(str(ex))
             return get_error_response(status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
@@ -28,7 +28,7 @@ class UsersController:
         try:
             user = users_service.get_user_by_id(user_id)
             user_output = user_output_schema.dump(user)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful search", user=user_output)
+            return get_success_response(status=HTTPStatus.OK.value, user=user_output)
         except EntityNotFoundError:
             return get_error_response(status=HTTPStatus.NOT_FOUND.value, message=f"User with id {user_id} not found")
         except Exception as ex:
@@ -42,7 +42,7 @@ class UsersController:
             updated_user_data = user_body_schema.load(request.json, partial=True)
             updated_user = users_service.update_user(user_id, **updated_user_data)
             user_output = user_output_schema.dump(updated_user)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful update", user=user_output)
+            return get_success_response(status=HTTPStatus.OK.value, user=user_output)
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except EntityNotFoundError:
@@ -56,7 +56,7 @@ class UsersController:
     def get_user_picture(self, user_id:int) -> tuple[Response, int]:
         try:
             picture_content = users_service.get_user_picture(user_id)
-            return get_error_response(status=HTTPStatus.OK.value, message="Successful search", picture_content=picture_content)
+            return get_error_response(status=HTTPStatus.OK.value, picture_content=picture_content)
         except Exception as ex:
             logger.exception(str(ex))
             return get_error_response(status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
@@ -67,7 +67,7 @@ class UsersController:
         try:
             picture_data = picture_body_schema.load(request.json)
             picture_id = users_service.update_user_picture(user_id, **picture_data)
-            return get_error_response(status=HTTPStatus.OK.value, message="Successful update", picture_id=picture_id)
+            return get_error_response(status=HTTPStatus.OK.value, picture_id=picture_id)
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except EntityNotFoundError:

@@ -16,7 +16,7 @@ class ChatsController:
         try:
             chats = chats_service.get_user_chats(user_id)
             chats_output = chats_output_schema.dump(chats)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful search", chats=chats_output)
+            return get_success_response(status=HTTPStatus.OK.value, chats=chats_output)
         except Exception as ex:
             logger.exception(str(ex))
             return get_error_response(status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
@@ -29,7 +29,7 @@ class ChatsController:
             new_chat_data = create_chat_body_schema.load(request.json)
             new_chat = chats_service.create_chat(**new_chat_data)
             new_chat_output = chat_output_schema.dump(new_chat)
-            return get_success_response(status=HTTPStatus.CREATED.value, message="Successful creation", chat=new_chat_output)
+            return get_success_response(status=HTTPStatus.CREATED.value, chat=new_chat_output)
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except Exception as ex:
@@ -43,7 +43,7 @@ class ChatsController:
             updated_chat_data = update_chat_body_schema.load(request.json, partial=True)
             updated_chat = chats_service.update_chat(chat_id, **updated_chat_data)
             updated_chat_output = chat_output_schema.dump(updated_chat)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful update", chat=updated_chat_output)
+            return get_success_response(status=HTTPStatus.OK.value, chat=updated_chat_output)
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except GroupNameModificationError:

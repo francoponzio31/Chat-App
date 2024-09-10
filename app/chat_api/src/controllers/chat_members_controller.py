@@ -16,7 +16,7 @@ class ChatMembersController:
         try:
             chat_members = chat_members_service.get_chat_members(chat_id)
             chat_members_output = chat_members_output_schema.dump(chat_members)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful search", chat_members=chat_members_output)
+            return get_success_response(status=HTTPStatus.OK.value, chat_members=chat_members_output)
         except Exception as ex:
             logger.exception(str(ex))
             return get_error_response(status=HTTPStatus.INTERNAL_SERVER_ERROR.value)
@@ -28,7 +28,7 @@ class ChatMembersController:
             new_member_data = chat_member_body_schema.load(request.json)
             new_chat_member = chat_members_service.add_member(**new_member_data)
             new_chat_member_output = chat_member_output_schema.dump(new_chat_member)
-            return get_success_response(status=HTTPStatus.CREATED.value, message="Successful creation", chat_member=new_chat_member_output)        
+            return get_success_response(status=HTTPStatus.CREATED.value, chat_member=new_chat_member_output)        
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except MemberAlreadyInChatError:

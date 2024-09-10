@@ -1,16 +1,15 @@
 from flask import jsonify, Response
 from datetime import datetime
+from http import HTTPStatus
 from humps import camelize
-from werkzeug.http import HTTP_STATUS_CODES
 
 
 def _get_base_response(status:int, message:str="", **kwargs) -> tuple[Response, int]:
-    response_data = camelize({
-        "message": message or HTTP_STATUS_CODES.get(status, ""),
+    body = camelize({
+        "message": message or HTTPStatus(status).phrase,
         **kwargs
     })
-
-    return jsonify(response_data), status
+    return jsonify(body), status
 
 
 def get_success_response(status:int, message:str="", **kwargs) -> tuple[Response, int]:

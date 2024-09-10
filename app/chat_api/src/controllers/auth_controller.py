@@ -16,7 +16,7 @@ class AuthController:
         try:
             credentials = login_body_schema.load(request.json)
             token = auth_service.login(**credentials)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful login", token=token)
+            return get_success_response(status=HTTPStatus.OK.value, token=token)
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except EmailNotVerifiedError:
@@ -32,7 +32,7 @@ class AuthController:
         try:
             new_user_data = signup_body_schema.load(request.json)
             auth_service.signup(**new_user_data)
-            return get_success_response(status=HTTPStatus.CREATED.value, message="Successful signup, verification email sent")
+            return get_success_response(status=HTTPStatus.CREATED.value)
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except EmailAlreadyRegisteredError:
@@ -64,7 +64,7 @@ class AuthController:
             user_id = g.user["id"]
             user = auth_service.current_user(user_id)
             user_output = current_user_output_schema.dump(user)
-            return get_success_response(status=HTTPStatus.OK.value, message="Successful search", user=user_output)
+            return get_success_response(status=HTTPStatus.OK.value, user=user_output)
         except ValidationError as ex:
             return get_error_response(status=HTTPStatus.BAD_REQUEST.value, message=f"Invalid data: {ex.messages}")
         except EntityNotFoundError:
