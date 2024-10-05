@@ -41,9 +41,9 @@ class UsersService{
     }
 
 
-    async updateProfilePicture(userId, token, content, filename){
+    async updateProfilePicture(token, content, filename){
         try {
-            const response = await axios.put(`${this.apiPrefix}/picture/${userId}`, {filename, content},
+            const response = await axios.put(`${this.apiPrefix}/picture`, {filename, content},
             {
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -58,9 +58,9 @@ class UsersService{
     }
 
 
-    async updateUser(userId, token, newData){
+    async updateUser(token, newData){
         try {
-            const response = await axios.patch(`${this.apiPrefix}/${userId}`, newData, {
+            const response = await axios.patch(`${this.apiPrefix}`, newData, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"

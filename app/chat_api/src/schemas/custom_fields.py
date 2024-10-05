@@ -3,7 +3,7 @@ from utilities.utils import hash_password
 import base64
 
 
-class HashedPassword(fields.Field):
+class HashedPasswordField(fields.Field):
     def _serialize(self, value, attr, obj, **kwargs):
         return value
 

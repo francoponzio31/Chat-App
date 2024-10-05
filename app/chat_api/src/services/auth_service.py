@@ -1,4 +1,4 @@
-from repositories import users_repository
+from repositories.users_repository import users_repository
 from utilities.custom_exceptions import InvalidCredentialsError, EmailNotVerifiedError, EmailAlreadyRegisteredError, InvalidVerificationTokenError
 from utilities.utils import compare_hashed_password
 from integrations.mailer_client import mailer_client

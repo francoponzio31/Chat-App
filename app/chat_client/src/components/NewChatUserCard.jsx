@@ -5,11 +5,14 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
 import { getUserPictureFilename } from "../utils/utils.js"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faComment } from "@fortawesome/free-solid-svg-icons"
 
 
 export default function NewChatUserCard({userId, username, email, pictureId}){
+
+    const navigate = useNavigate()
 
     const [profilePictureFile, setProfilePictureFile] = useState(null)
 
@@ -20,7 +23,19 @@ export default function NewChatUserCard({userId, username, email, pictureId}){
         }
 
         fetchProfilePicture()
-    }, [pictureId])
+    }, [])
+
+    
+    function handleOpenChat(){
+
+        console.log("userTo:", username)
+
+        //? Obtener id del chat individual entre los usuarios. Si no lo hay crearlo agregando como miembros a los usuarios
+
+        // Redirigir a una pantalla de chat con el id del chat
+        navigate("/chat/1")
+
+    }
 
     return (
         <Card body className="bg-dark-subtle border-dark-subtle" key={userId}>
@@ -40,7 +55,7 @@ export default function NewChatUserCard({userId, username, email, pictureId}){
                         placement="left"
                         overlay={<Tooltip>Send message</Tooltip>}
                     >
-                        <Button className="rounded-pill">
+                        <Button className="rounded-pill" onClick={handleOpenChat}>
                             <FontAwesomeIcon icon={faComment} size="xs"/>
                         </Button>
                     </OverlayTrigger>

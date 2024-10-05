@@ -8,8 +8,8 @@ class EmailAlreadyRegisteredError(Exception): pass
 
 class InvalidVerificationTokenError(Exception): pass
 
-class GroupNameModificationError(Exception): pass
-
 class MemberAlreadyInChatError(Exception): pass
 
 class UserIsNotInChatError(Exception): pass
+
+class DirectChatWithSameUserError(Exception): pass

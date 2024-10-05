@@ -60,7 +60,6 @@ export default function NewChatModal({showChatModal, setShowChatModal}){
                         placeholder="Search for username"
                         value={searchTerm}
                         onChange={handleSearchInputChange}
-                        autoFocus
                 />
                 <Container 
                     className={`d-flex flex-column align-items-center ${!usersSearchResult.length || loading ? "justify-content-center" : ""}`} 

@@ -19,10 +19,8 @@ class Config:
     JWT_KEY = get_env_value("JWT_KEY", "not_set")
     VERIFY_JWT_EXPIRATION = get_env_value("VERIFY_JWT_EXPIRATION", True)
 
-    # REPOSITORIES
-    DATA_PERSISTENCE_TYPE = get_env_value("DATA_PERSISTENCE_TYPE", "not_set")
-    DATA_PERSISTENCE_PATH = get_env_value("DATA_PERSISTENCE_PATH", "not_set")
-    DB_URL = get_env_value("DB_URL", None)
+    # DB
+    DB_URL = get_env_value("DB_URL", "not_set")
     
     # INTEGRATIONS
     FILESERVER_BASE_URL = get_env_value("FILESERVER_BASE_URL", "not_set")

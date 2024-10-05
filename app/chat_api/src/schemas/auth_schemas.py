@@ -1,20 +1,21 @@
-from marshmallow import Schema, fields, validate
+from schemas.base_schema import BaseSchema
+from marshmallow import fields, validate
 from schemas import custom_fields
 
 
 # ---- INPUTS ----
-class LoginBodySchema(Schema):
+class LoginBodySchema(BaseSchema):
     email = fields.Email(required=True)
     password = fields.String(required=True)
 
 
-class SignupBodySchema(Schema):
+class SignupBodySchema(BaseSchema):
     username = fields.String(validate=validate.Length(min=1), required=True)
     email = fields.Email(required=True)
-    password = custom_fields.HashedPassword(required=True)
+    password = custom_fields.HashedPasswordField(required=True)
 
 
-class EmailVerificationBodySchema(Schema):
+class EmailVerificationBodySchema(BaseSchema):
     token = fields.String(required=True)
 
 
@@ -23,7 +24,7 @@ signup_body_schema = SignupBodySchema()
 email_validation_body_schema = EmailVerificationBodySchema()
 
 # ---- OUTPUTS ----
-class CurrentUserOutputSchema(Schema):
+class CurrentUserOutputSchema(BaseSchema):
     id = fields.Integer()
     username = fields.String()
     email = fields.Email()

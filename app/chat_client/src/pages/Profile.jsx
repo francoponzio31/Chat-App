@@ -73,7 +73,7 @@ export default function Profile() {
 
         if (updatedUsername != username){
             console.log("Updated username:", updatedUsername)
-            await userService.updateUser(userId, authContext.token, {
+            await userService.updateUser(authContext.token, {
                 username: updatedUsername
             })
             dataUpdated = true
@@ -82,7 +82,7 @@ export default function Profile() {
             console.log("Selected file:", selectedFile)
             const profilePictureBase64 = await toBase64(selectedFile)
             const profilePictureName = selectedFile.name
-            await userService.updateProfilePicture(userId, authContext.token, profilePictureBase64, profilePictureName)
+            await userService.updateProfilePicture(authContext.token, profilePictureBase64, profilePictureName)
             dataUpdated = true
         }
 

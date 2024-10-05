@@ -6,7 +6,7 @@ import NewChatModal from "../components/NewChatModal.jsx"
 import { useState } from "react"
 
 
-export default function Chats(){
+export default function Home(){
 
     const [showChatModal, setShowChatModal] = useState(false)
     const handleShowChatModal = () => setShowChatModal(true)
@@ -18,7 +18,7 @@ export default function Chats(){
                 <h3 className="my-3">Chats</h3>
                 <ChatCard contactName={"Chat 1"} contactUserId={1}/>
             </Container>
-            <CreateElementBtn tooltip={"Add new chat"} onClickFunction={handleShowChatModal}/>
+            <CreateElementBtn tooltip={"Create new chat"} onClickFunction={handleShowChatModal}/>
             <NewChatModal showChatModal={showChatModal} setShowChatModal={setShowChatModal}></NewChatModal>
         </>
     )

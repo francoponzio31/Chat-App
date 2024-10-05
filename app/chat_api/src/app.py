@@ -16,9 +16,8 @@ def create_app() -> Flask:
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     # DB
-    if config.DATA_PERSISTENCE_TYPE == "SQL":
-        with app.app_context():
-            init_db()
+    with app.app_context():
+        init_db()
 
     # ROUTES
     init_routes(app)

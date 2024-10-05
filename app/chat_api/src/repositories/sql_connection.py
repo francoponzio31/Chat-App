@@ -32,9 +32,11 @@ def with_db_session(f):
         db_session = create_db_session()
         try:
             result = f(*args, db_session=db_session, **kwargs)
+            db_session.commit()
             return result
         except Exception as ex:
             logger.exception(str(ex))
+            db_session.rollback()
             raise
         finally:
             db_session.close()
@@ -52,8 +54,5 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
 def init_db():
 
     # import sql models here to create they tables
-    from models.user_models import UserSQLModel
-    from models.chat_models import Chat
-    from models.chat_member_models import ChatMember
-    from models.message_models import Message
+    from models.user_models import UserModel
     BaseModel.metadata.create_all(bind=engine)

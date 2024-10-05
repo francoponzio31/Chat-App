@@ -48,50 +48,35 @@ class SQLBaseRepository(Generic[T], ABC):
     def get_by_id(self, id:int, db_session:scoped_session=None) -> T:
         obj = db_session.query(self.Model).get(id)
         if not obj:
-            raise EntityNotFoundError
+            raise EntityNotFoundError(f"{str(self.Model())} with id {id} does not exists")
         return obj
 
 
     @with_db_session
     def create_one(self, db_session:scoped_session=None, **kwargs) -> T:
-        try:
-            new_obj = self.Model(**kwargs)
-            db_session.add(new_obj)
-            db_session.commit()
-            return new_obj
-        except Exception:
-            db_session.rollback()
-            raise
-
+        new_obj = self.Model(**kwargs)
+        db_session.add(new_obj)
+        return new_obj
+  
 
     @with_db_session
     def update_one(self, id:int, return_original:bool=False, db_session:scoped_session=None, **kwargs) -> T:
-        try:
-            obj = db_session.query(self.Model).get(id)
-            if not obj:
-                raise EntityNotFoundError
-            
-            original_obj = copy.deepcopy(obj)
-
-            for key, value in kwargs.items():
-                setattr(obj, key, value) 
-            db_session.commit()
-
-            return original_obj if return_original else obj
+        obj = db_session.query(self.Model).get(id)
+        if not obj:
+            raise EntityNotFoundError(f"{str(self.Model())} with id {id} does not exists")
         
-        except Exception:
-            db_session.rollback()
-            raise
+        original_obj = copy.deepcopy(obj)
 
+        for key, value in kwargs.items():
+            setattr(obj, key, value) 
+
+        return original_obj if return_original else obj
+    
     
     @with_db_session
     def delete_one(self, id:int, db_session:scoped_session=None) -> None:
-        try:
-            obj = db_session.query(self.Model).get(id)
-            if not obj:
-                raise EntityNotFoundError
-            db_session.delete(obj)
-            db_session.commit()
-        except Exception:
-            db_session.rollback()
-            raise
+        obj = db_session.query(self.Model).get(id)
+        if not obj:
+            raise EntityNotFoundError(f"{str(self.Model())} with id {id} does not exists")
+        db_session.delete(obj)
+
