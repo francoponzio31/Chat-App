@@ -1,4 +1,5 @@
 from repositories.users_repository import users_repository
+from models.user_models import UserModel
 from utilities.custom_exceptions import InvalidCredentialsError, EmailNotVerifiedError, EmailAlreadyRegisteredError, InvalidVerificationTokenError
 from utilities.utils import compare_hashed_password
 from integrations.mailer_client import mailer_client
@@ -10,7 +11,7 @@ from config.app_config import config
 
 class AuthService:
         
-    def login(self, email:str, password:str) -> str:
+    def login(self, email:str, password:str) -> tuple[str, UserModel]:
 
         user = users_repository.get_by_email(email, raise_if_not_found=False)
 
@@ -32,7 +33,7 @@ class AuthService:
 
         token = jwt.encode(payload, current_app.config["JWT_KEY"], algorithm="HS256")
 
-        return token
+        return token, user
 
 
     def signup(self, username:str, email:str, password:str):

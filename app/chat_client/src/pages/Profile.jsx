@@ -23,7 +23,6 @@ export default function Profile() {
 
     const [username, setUsername] = useState("")
     const [userEmail, setUserEmail] = useState("")
-    const [userId, setUserId] = useState("")
     const [profilePicture, setProfilePicture] = useState("")
 
     const usernameInputRef = useRef(null)
@@ -36,7 +35,6 @@ export default function Profile() {
             const response = await authService.current(authContext.token)
             setUsername(response.user.username)
             setUserEmail(response.user.email)
-            setUserId(response.user.id)
             const profilePictureFile = await getUserPictureFilename(response.user.pictureId)
             setProfilePicture(profilePictureFile)
             setLoadingUserData(false)

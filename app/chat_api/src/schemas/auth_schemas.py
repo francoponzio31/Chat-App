@@ -24,6 +24,7 @@ signup_body_schema = SignupBodySchema()
 email_validation_body_schema = EmailVerificationBodySchema()
 
 # ---- OUTPUTS ----
+
 class CurrentUserOutputSchema(BaseSchema):
     id = fields.Integer()
     username = fields.String()
@@ -32,5 +33,10 @@ class CurrentUserOutputSchema(BaseSchema):
     picture_id = fields.String()
     creation_date = fields.DateTime()
 
+class LoginOutputSchema(BaseSchema):
+    token = fields.String()
+    user = fields.Nested(CurrentUserOutputSchema)
+
 
 current_user_output_schema = CurrentUserOutputSchema()
+login_output_schema = LoginOutputSchema()

@@ -36,10 +36,13 @@ class ChatRepository(SQLBaseRepository[ChatModel]):
             unread_messages_subquery, unread_messages_subquery.c.chat_id == self.Model.id
         ).filter(
             ChatMemberModel.user_id == user_id
+        ).order_by(
+            func.coalesce(unread_messages_subquery.c.unread_count, 0).desc(),
+            self.Model.creation_date.desc()
         )
 
         if chat_type:
-            query = query.filter(self.Model.is_group == (type == "group"))
+            query = query.filter(self.Model.is_group == (chat_type == "group"))
 
         total_count = query.count()
 

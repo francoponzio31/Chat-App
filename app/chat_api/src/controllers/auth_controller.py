@@ -1,6 +1,6 @@
 from flask import request, g, Response
 from utilities import status_codes
-from schemas.auth_schemas import login_body_schema, signup_body_schema, email_validation_body_schema, current_user_output_schema
+from schemas.auth_schemas import login_body_schema, signup_body_schema, email_validation_body_schema, current_user_output_schema, login_output_schema
 from services.auth_service import auth_service
 from marshmallow import ValidationError
 from utilities.responses import get_success_response, get_error_response
@@ -15,8 +15,9 @@ class AuthController:
     def login(self) -> tuple[Response, int]:
         try:
             credentials = login_body_schema.load(request.json)
-            token = auth_service.login(**credentials)
-            return get_success_response(status=status_codes.HTTP_200_OK, token=token)
+            token, user = auth_service.login(**credentials)
+            login_output = login_output_schema.dump({"token": token, "user": user})
+            return get_success_response(status=status_codes.HTTP_200_OK, **login_output)
         except ValidationError as ex:
             return get_error_response(status=status_codes.HTTP_400_BAD_REQUEST, message=f"Invalid data: {ex.messages}")
         except EmailNotVerifiedError:

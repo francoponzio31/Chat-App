@@ -20,7 +20,7 @@ class SQLBaseRepository(Generic[T], ABC):
 
 
     @with_db_session
-    def get_all(self, limit:int|None, offset:int|None, db_session:scoped_session=None, **kwargs) -> tuple[list[T], int]:
+    def get_all(self, limit:int|None, offset:int|None, exclude_ids:list=[], db_session:scoped_session=None, **kwargs) -> tuple[list[T], int]:
         query = db_session.query(self.Model)
 
         for key, value in kwargs.items():
@@ -32,6 +32,9 @@ class SQLBaseRepository(Generic[T], ABC):
             else:
                 # Apply equality filter for other data types
                 query = query.filter_by(**{key: value})
+
+        if exclude_ids is not None:
+            query = query.filter(self.Model.id.notin_(exclude_ids))
 
         total_count = query.count()
 

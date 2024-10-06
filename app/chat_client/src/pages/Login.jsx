@@ -24,7 +24,7 @@ export default function Login(){
         
         try {
             const response = await authService.login(emailInputRef.current.value, passwordInputRef.current.value)
-            authContext.login(response.token)
+            authContext.login(response.token, response.user)
             setError("")
             navigate("/")
         } catch (error) {          

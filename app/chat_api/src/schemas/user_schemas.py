@@ -8,6 +8,8 @@ class UserSearchParamsSchema(BaseSchema):
     limit = fields.Integer(required=False)
     offset = fields.Integer(required=False)
     username = fields.String(required=False)
+    is_verified = fields.Boolean(required=False)
+    exclude_current_user = fields.Boolean(required=False)
 
 
 class UserBodySchema(BaseSchema):
@@ -32,6 +34,7 @@ class UserOutputSchema(BaseSchema):
     email = fields.Email()
     role = fields.String()
     picture_id = fields.UUID()
+    is_verified = fields.Boolean()
     creation_date = fields.DateTime()
 
 

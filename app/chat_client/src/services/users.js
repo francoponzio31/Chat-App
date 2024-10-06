@@ -11,7 +11,8 @@ class UsersService{
                 params: {
                     limit,
                     offset,
-                    username
+                    username,
+                    excludeCurrentUser: true
                 },
                 headers: {
                     "Authorization": `Bearer ${token}`,

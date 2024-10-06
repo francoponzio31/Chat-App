@@ -14,8 +14,9 @@ class UsersController:
     @login_required
     def get_users(self) -> tuple[Response, int]:
         try:
+            user_id = g.user.id
             search_params = user_search_params_schema.load(request.args)
-            users_result, total_count = users_service.get_users(**search_params)
+            users_result, total_count = users_service.get_users(user_id, **search_params)
             users_output = users_output_schema.dump(users_result)
             return get_success_response(status=status_codes.HTTP_200_OK, users=users_output, total_count=total_count)
         except Exception as ex:

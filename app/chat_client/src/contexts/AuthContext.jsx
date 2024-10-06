@@ -14,10 +14,13 @@ export const useAuth = () => {
 export function AuthProvider({ children }) {
     
     const [token, setToken] = useState(() => localStorage.getItem("authToken"))
+    const [userId, setUserId] = useState(() => localStorage.getItem("userId"))
 
-    const login = (userToken) => {
+    const login = (userToken, user) => {
       setToken(userToken)
+      setUserId(user.id)
       localStorage.setItem("authToken", userToken)
+      localStorage.setItem("userId", user.id)
     }
 
     const logout = () => {
@@ -26,7 +29,7 @@ export function AuthProvider({ children }) {
     }
     
     return (
-      <AuthContext.Provider value={{ token, login, logout }}>
+      <AuthContext.Provider value={{ token, userId, login, logout }}>
         {children}
       </AuthContext.Provider>
     )
