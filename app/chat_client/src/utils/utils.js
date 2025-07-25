@@ -8,7 +8,7 @@ export async function toBase64(file){
 }
 
 
-export async function getUserPictureFilename(pictureId){
+export function getUserPictureFilename(pictureId){
     return (
         pictureId ? `/files/${pictureId}` : "/circle-user-solid.svg"
     )

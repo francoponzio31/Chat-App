@@ -28,3 +28,13 @@ class Base64encodedField(fields.Field):
 
     def _serialize(self, value, attr, obj, **kwargs) -> str:
         return value
+
+
+class DelimitedListField(fields.List):
+    def _deserialize(self, value, attr, data, **kwargs):
+        try:                                                    
+            return value.split(",")                        
+        except AttributeError:                                                                                                                                               
+            raise ValidationError(
+                f"{attr} is not a delimited list it has a non string value {value}."
+            )

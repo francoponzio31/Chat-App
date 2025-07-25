@@ -36,7 +36,7 @@ class ChatBodySchema(BaseSchema):
             members = data.get("chat_members_ids", [])
             if len(members) != 2:
                 raise ValidationError("A direct chat must have exactly 2 members.", "chat_members_ids")
-            
+
 
 class MessageBodySchema(BaseSchema):
     content = fields.String(required=True)
@@ -58,7 +58,7 @@ messages_read_body_schema = MessageReadBodySchema()
 class UserOutputSchema(BaseSchema):
     id = fields.Integer()
     username = fields.String()
-    picture_id = fields.UUID()
+    picture_id = fields.UUID(allow_none=True)
 
 class ChatMemberOutputSchema(BaseSchema):
     joined_date = fields.DateTime()
@@ -67,6 +67,7 @@ class ChatMemberOutputSchema(BaseSchema):
 
 class MessageOutputSchema(BaseSchema):
     id = fields.Integer()
+    chat_id = fields.Integer()
     content = fields.String()
     sender_user = fields.Nested(UserOutputSchema)
     read_by_user = fields.Boolean(required=False)

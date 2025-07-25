@@ -35,7 +35,7 @@ export default function Profile() {
             const response = await authService.current(authContext.token)
             setUsername(response.user.username)
             setUserEmail(response.user.email)
-            const profilePictureFile = await getUserPictureFilename(response.user.pictureId)
+            const profilePictureFile = getUserPictureFilename(response.user.pictureId)
             setProfilePicture(profilePictureFile)
             setLoadingUserData(false)
         } catch (error) {

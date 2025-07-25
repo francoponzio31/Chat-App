@@ -9,7 +9,7 @@ export default function Message({userName, userPictureId, content, sentTime}){
     const [profilePictureFile, setProfilePictureFile] = useState(null)
     useEffect(() => {
         const fetchProfilePicture = async () => {
-            const filename = await getUserPictureFilename(userPictureId)
+            const filename = getUserPictureFilename(userPictureId)
             setProfilePictureFile(filename)
         }
 

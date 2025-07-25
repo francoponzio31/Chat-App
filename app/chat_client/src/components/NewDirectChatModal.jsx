@@ -4,14 +4,14 @@ import Button from "react-bootstrap/Button"
 import Container from "react-bootstrap/Container"
 import Spinner from "react-bootstrap/Spinner"
 import Pagination from "react-bootstrap/Pagination"
-import NewChatUserCard from "./NewChatUserCard.jsx"
+import NewDirectChatUserCard from "./NewDirectChatUserCard.jsx"
 import { useState, useEffect } from "react"
 import { useAuth } from "../contexts/AuthContext.jsx"
 import userService from "../services/users.js"
 import { useDebounce } from "use-debounce"
 
 
-export default function NewChatModal({showChatModal, setShowChatModal}){
+export default function NewDirectChatModal({showChatModal, setShowChatModal}){
 
     const authContext = useAuth()
     const searchLimit = 5
@@ -24,7 +24,7 @@ export default function NewChatModal({showChatModal, setShowChatModal}){
 
     async function searchUsers(offset, search) {
         setLoading(true)
-        const response = await userService.search(searchLimit, offset, search, authContext.token)
+        const response = await userService.search(searchLimit, offset, search, authContext.token, [authContext.userId])
         setUsersSearchResult(response.users)
         setPageAmount(Math.ceil(response.totalCount / searchLimit))        
         setLoading(false)
@@ -51,7 +51,7 @@ export default function NewChatModal({showChatModal, setShowChatModal}){
     return(
         <Modal show={showChatModal} onHide={handleCloseChatModal} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title>Add new chat</Modal.Title>
+                <Modal.Title>Add new direct chat</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form.Control
@@ -76,7 +76,7 @@ export default function NewChatModal({showChatModal, setShowChatModal}){
                                 <div className="d-flex flex-column w-100" style={{ flexGrow: 1 }}>
                                     <div className="d-flex flex-column gap-2" style={{ flexGrow: 1 }}>
                                         {usersSearchResult.map((user) => (
-                                            <NewChatUserCard
+                                            <NewDirectChatUserCard
                                                 key={user.id}
                                                 userId={user.id}
                                                 username={user.username}
@@ -106,7 +106,6 @@ export default function NewChatModal({showChatModal, setShowChatModal}){
                             )
                         )
                     }
-                
                 </Container>
 
             </Modal.Body>

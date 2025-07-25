@@ -5,7 +5,7 @@ from utilities.custom_exceptions import EntityNotFoundError
 from repositories.sql_connection import with_db_session, scoped_session
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import joinedload
-from sqlalchemy import func
+from sqlalchemy import func, case
 
 
 class ChatRepository(SQLBaseRepository[ChatModel]):
@@ -24,7 +24,8 @@ class ChatRepository(SQLBaseRepository[ChatModel]):
             MessageReadModel,
             (MessageReadModel.message_id == MessageModel.id) & (MessageReadModel.user_id == user_id)
         ).filter(
-            MessageReadModel.read_at.is_(None)
+            MessageReadModel.read_at.is_(None),
+            MessageModel.sender_user_id != user_id
         ).group_by(MessageModel.chat_id).subquery()
 
         query = db_session.query(
@@ -59,7 +60,6 @@ class ChatRepository(SQLBaseRepository[ChatModel]):
 
         return results, total_count
 
-    
 
     @with_db_session
     def create_chat(self, is_group:bool, group_name:str|None, chat_members_ids:list, db_session:scoped_session = None) -> ChatModel:
@@ -75,8 +75,13 @@ class ChatRepository(SQLBaseRepository[ChatModel]):
             except IntegrityError:
                 raise EntityNotFoundError(f"{str(UserModel())} with id {member_id} does not exists")
         
-        return new_chat
+        # Query the chat again with joinedload to ensure all relationships are loaded
+        new_chat = db_session.query(ChatModel).options(
+            joinedload(ChatModel.chat_members).joinedload(ChatMemberModel.user)
+        ).filter(ChatModel.id == new_chat.id).first()
         
+        return new_chat
+
 
     @with_db_session
     def get_direct_chat_with_second_user(self, user_id:int, second_user_id:int, db_session:scoped_session = None) -> ChatModel | None:
@@ -94,10 +99,15 @@ class ChatRepository(SQLBaseRepository[ChatModel]):
     @with_db_session
     def get_chat_messages(self, chat_id:int, user_id:int, limit:int|None, offset:int|None, db_session:scoped_session=None) -> tuple[list[MessageModel], int]:
         chat = self.get_by_id(chat_id)
-        
+
+        read_by_user_case = case(
+            (MessageModel.sender_user_id == user_id, True),  # read_by_user it's true if the message was sent by the user
+            else_=func.coalesce(MessageReadModel.read_at.isnot(None), False)
+        )
+
         query = db_session.query(
             MessageModel,
-            func.coalesce(MessageReadModel.read_at.isnot(None), False).label("read_by_user")
+            read_by_user_case.label("read_by_user")
         ).outerjoin(
             MessageReadModel,
             (MessageReadModel.message_id == MessageModel.id) & (MessageReadModel.user_id == user_id)
@@ -151,7 +161,7 @@ class ChatRepository(SQLBaseRepository[ChatModel]):
                 db_session.add(message_read)
                 db_session.flush()
             except IntegrityError:
-                raise EntityNotFoundError(f"{str(MessageReadModel())} with id {messages_id} does not exists")
+                raise EntityNotFoundError(f"Message with id {message_id} could not be marked as read for user {user_id}")
 
 
 chats_repository = ChatRepository()

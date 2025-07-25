@@ -14,4 +14,4 @@ ENV PYTHONPATH=/app/src
 
 EXPOSE ${API_PORT}
 
-CMD gunicorn -w 4 -b $API_HOST:$API_PORT src.main:app
+CMD gunicorn -k gevent -w 1 -b $API_HOST:$API_PORT src.main:app

@@ -1,17 +1,17 @@
 from repositories.users_repository import users_repository
 from models.user_models import UserModel
-from integrations.fileserver_client import fs_client
+from external.fileserver_client import fs_client
 
 
 class UsersService:
         
-    def get_users(self, user_id:int, limit:int|None=None, offset:int|None=None, username:str|None=None, is_verified:bool=True, exclude_current_user:bool=False) -> tuple[list[UserModel], int]:
+    def get_users(self, limit:int|None=None, offset:int|None=None, username:str|None=None, is_verified:bool=True, exclude_users:list=[]) -> tuple[list[UserModel], int]:
         return users_repository.get_all(
             offset=offset,
             limit=limit,
             username=username,
             is_verified=is_verified,
-            exclude_ids=[user_id] if exclude_current_user else []
+            exclude_ids=exclude_users
         )
 
 

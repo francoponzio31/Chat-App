@@ -13,3 +13,5 @@ class MemberAlreadyInChatError(Exception): pass
 class UserIsNotInChatError(Exception): pass
 
 class DirectChatWithSameUserError(Exception): pass
+
+class AuthenticationFailedError(Exception): pass

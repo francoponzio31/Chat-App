@@ -3,11 +3,13 @@ import Badge from "react-bootstrap/Badge"
 import Image from "react-bootstrap/Image"
 import { useAuth } from "../contexts/AuthContext.jsx"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { getUserPictureFilename } from "../utils/utils.js"
 import "../index.css"
 
-export function DirectChatCard({chatMembers, unreadMessages}){
+export function DirectChatCard({chatId, chatMembers, unreadMessages}){
 
+    const navigate = useNavigate()
     const authContext = useAuth()
     const currentUserId = parseInt(authContext.userId)
     const chatPartner = chatMembers.find(member => member.user.id !== currentUserId)
@@ -16,15 +18,23 @@ export function DirectChatCard({chatMembers, unreadMessages}){
 
     useEffect(() => {
         const fetchProfilePicture = async () => {
-            const filename = await getUserPictureFilename(chatPartner.user.pictureId)
+            const filename = getUserPictureFilename(chatPartner.user.pictureId)
             setPartnerProfilePictureFile(filename)
         }
 
         fetchProfilePicture()
     }, [])
-    
+
+    function handleChatRedirect(chatId){
+        navigate(`/chat/${chatId}`)
+    }
+
     return (
-        <Card body className={`selectable ${unreadMessages ? "bg-black border-primary-subtle" : "bg-secondary-subtle border-dark-subtle"}`}>
+        <Card
+            body
+            onClick={() => handleChatRedirect(chatId)}
+            className={`selectable ${unreadMessages ? "bg-black border-primary-subtle" : "bg-secondary-subtle border-dark-subtle"}`}
+        >
             <div className="d-flex gap-3 align-items-center justify-content-center">
                 <Image
                     src={partnerProfilePictureFile}
@@ -47,10 +57,19 @@ export function DirectChatCard({chatMembers, unreadMessages}){
 
 }
 
-export function GroupChatCard({chatMembers, groupName, unreadMessages}){
+export function GroupChatCard({chatId, chatMembers, groupName, unreadMessages}){
     
+    const navigate = useNavigate()
+    function handleChatRedirect(chatId){
+        navigate(`/chat/${chatId}`)
+    }
+
     return (
-        <Card body className={`selectable ${unreadMessages ? "bg-black border-primary-subtle" : "bg-secondary-subtle border-dark-subtle"}`}>
+        <Card 
+            body
+            onClick={() => handleChatRedirect(chatId)}
+            className={`selectable ${unreadMessages ? "bg-black border-primary-subtle" : "bg-secondary-subtle border-dark-subtle"}`}
+        >
             <div className="d-flex gap-3 align-items-center justify-content-center">
                 <Image
                     src="/users-group-solid.svg"

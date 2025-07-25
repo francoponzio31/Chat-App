@@ -2,7 +2,7 @@ from repositories.users_repository import users_repository
 from models.user_models import UserModel
 from utilities.custom_exceptions import InvalidCredentialsError, EmailNotVerifiedError, EmailAlreadyRegisteredError, InvalidVerificationTokenError
 from utilities.utils import compare_hashed_password
-from integrations.mailer_client import mailer_client
+from external.mailer_client import mailer_client
 from flask import current_app
 import datetime
 import jwt

@@ -9,7 +9,7 @@ class UserSearchParamsSchema(BaseSchema):
     offset = fields.Integer(required=False)
     username = fields.String(required=False)
     is_verified = fields.Boolean(required=False)
-    exclude_current_user = fields.Boolean(required=False)
+    exclude_users = custom_fields.DelimitedListField(fields.Integer(), required=False)
 
 
 class UserBodySchema(BaseSchema):

@@ -17,7 +17,10 @@ class ChatsService:
         return chats_repository.get_by_id(chat_id)
     
 
-    def get_direct_chat_with_second_user(self, user_id:int, second_user_id:int) -> ChatModel:
+    def get_direct_chat_id_with_second_user(self, user_id:int, second_user_id:int) -> tuple[int, bool]:
+
+        is_new_chat = False
+
         if user_id == second_user_id:
             raise DirectChatWithSameUserError
 
@@ -28,7 +31,9 @@ class ChatsService:
                 group_name=None,
                 chat_members_ids=[user_id, second_user_id]
             )
-        return chat
+            is_new_chat = True
+
+        return chat.id, is_new_chat
 
 
     def get_chat_messages(self, chat_id:int, user_id:int, limit:int|None=None, offset:int|None=None) -> list[MessageModel]:
@@ -36,7 +41,7 @@ class ChatsService:
 
 
     def send_message(self, sender_user_id:int, chat_id:int, content:str) -> MessageModel:
-        user_is_in_chat = chats_repository.check_if_user_is_in_chat(
+        user_is_in_chat = self.check_if_user_is_in_chat(
             chat_id = chat_id,
             user_id = sender_user_id,
         )
@@ -48,5 +53,7 @@ class ChatsService:
     def record_message_read(self, user_id:int, messages_id:list[str]):
         chats_repository.record_message_read(user_id=user_id, messages_id=messages_id)
 
+    def check_if_user_is_in_chat(self, chat_id:int, user_id:int) -> bool:
+        return chats_repository.check_if_user_is_in_chat(chat_id=chat_id, user_id=user_id)
 
 chats_service = ChatsService()

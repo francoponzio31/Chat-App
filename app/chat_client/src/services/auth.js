@@ -3,7 +3,7 @@ import axios from "./axiosConfig"
 
 class AuthService{
 
-    apiPrefix = "/auth"
+    apiPrefix = "/api/auth"
 
     async login(email, password){
         try {

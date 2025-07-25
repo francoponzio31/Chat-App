@@ -3,6 +3,9 @@ import Image from "react-bootstrap/Image"
 import Button from "react-bootstrap/Button"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
+import chatsService from "../services/chats.js"
+import { useAuth } from "../contexts/AuthContext.jsx"
+import { useSocket } from "../contexts/SocketsContext.jsx"
 import { getUserPictureFilename } from "../utils/utils.js"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -10,15 +13,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faComment } from "@fortawesome/free-solid-svg-icons"
 
 
-export default function NewChatUserCard({userId, username, email, pictureId}){
+export default function NewDirectChatUserCard({userId, username, email, pictureId}){
 
     const navigate = useNavigate()
+    const authContext = useAuth()
+    const socketContext = useSocket()
 
     const [profilePictureFile, setProfilePictureFile] = useState(null)
 
     useEffect(() => {
         const fetchProfilePicture = async () => {
-            const filename = await getUserPictureFilename(pictureId)
+            const filename = getUserPictureFilename(pictureId)
             setProfilePictureFile(filename)
         }
 
@@ -26,14 +31,27 @@ export default function NewChatUserCard({userId, username, email, pictureId}){
     }, [])
 
     
-    function handleOpenChat(){
+    async function handleOpenChat(){
 
-        console.log("userTo:", username)
+        const response = await chatsService.getDirectChatIdWithSecondUser({
+            secondUserId: userId, 
+            token: authContext.token
+        })
+        const chatId = await response.chatId
+        const isNewChat = await response.isNewChat
 
-        //? Obtener id del chat individual entre los usuarios. Si no lo hay crearlo agregando como miembros a los usuarios
+        // If the chat is new, emit the create_chat event to the server
+        if (isNewChat) {
+            socketContext.socket.emit("create_chat", {
+                token: authContext.token,
+                detail: {
+                    chatId: chatId,
+                    chatMembers: [authContext.userId, userId]
+                }
+            })
+        }
 
-        // Redirigir a una pantalla de chat con el id del chat
-        navigate("/chat/1")
+        navigate(`/chat/${chatId}`)
 
     }
 

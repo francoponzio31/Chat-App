@@ -60,6 +60,13 @@ class SQLBaseRepository(Generic[T], ABC):
         new_obj = self.Model(**kwargs)
         db_session.add(new_obj)
         return new_obj
+
+
+    @with_db_session
+    def create_many(self, objects:list[dict], db_session:scoped_session=None) -> list[T]:
+        new_objs = [self.Model(**obj) for obj in objects]
+        db_session.add_all(new_objs)
+        return new_objs
   
 
     @with_db_session

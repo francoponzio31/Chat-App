@@ -8,6 +8,15 @@ from services.users_service import users_service
 from utilities.custom_exceptions import EntityNotFoundError
 
 
+def decode_token(token: str) -> dict:
+    return jwt.decode(
+        token,
+        current_app.config["JWT_KEY"],
+        algorithms=["HS256"],
+        options={"verify_exp": current_app.config["VERIFY_JWT_EXPIRATION"]}
+    )
+
+
 def login_required(function):
     @wraps(function)
     def decorated(*args, **kwargs):
@@ -22,12 +31,7 @@ def login_required(function):
             return get_error_response(status=status_codes.HTTP_401_UNAUTHORIZED, message="Token is missing!")
         
         try:
-            data = jwt.decode(
-                token,
-                current_app.config["JWT_KEY"],
-                algorithms=["HS256"],
-                options={"verify_exp": current_app.config["VERIFY_JWT_EXPIRATION"]}
-            )
+            data = decode_token(token)
             g.user = users_service.get_user_by_id(data["user"]["id"])  # User data added to request g object
 
         except jwt.ExpiredSignatureError:
@@ -35,8 +39,9 @@ def login_required(function):
         except jwt.InvalidTokenError:
             return get_error_response(status=status_codes.HTTP_401_UNAUTHORIZED, message="Token is invalid!")
         except EntityNotFoundError as ex:
-            return get_error_response(status=status_codes.HTTP_404_NOT_FOUND, message=str(ex))
+            return get_error_response(status=status_codes.HTTP_401_UNAUTHORIZED, message=f"User with id {data['user']['id']} does not exists")
         except Exception as ex:
+            logger.exception("Token decoding error:")
             logger.exception(str(ex))
             return get_error_response(status=status_codes.HTTP_500_INTERNAL_SERVER_ERROR, message="Unable to verify token")
         

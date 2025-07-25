@@ -10,17 +10,28 @@ from utilities.logger import logger
 
 DB_URL = config.DB_URL
 if DB_URL:
-    engine = create_engine(DB_URL)
+    # Configure engine for gevent compatibility
+    engine = create_engine(
+        DB_URL,
+        poolclass=None,  # Disable connection pooling for gevent
+        pool_pre_ping=True,  # Verify connections before use
+        echo=False
+    )
 
 # Models base class
 BaseModel = declarative_base()
 
 
 def create_db_session():
-    db_session = scoped_session(
-        sessionmaker(autocommit=False, autoflush=False, bind=engine, expire_on_commit=False)
+    # For gevent, avoid scoped_session which uses threading.local
+    # Use regular sessionmaker instead
+    session_factory = sessionmaker(
+        autocommit=False, 
+        autoflush=False, 
+        bind=engine, 
+        expire_on_commit=False
     )
-    return db_session
+    return session_factory()
 
 
 def with_db_session(f):

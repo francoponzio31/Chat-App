@@ -10,7 +10,7 @@ chats_bp.add_url_rule("/", "create_chat", chats_controller.create_chat, methods=
 
 chats_bp.add_url_rule("/<int:chat_id>", "get_chat_by_id", chats_controller.get_chat_by_id, methods=["GET"])
 
-chats_bp.add_url_rule("/direct-chat-with-user/<int:second_user_id>", "get_direct_chat_with_second_user", chats_controller.get_direct_chat_with_second_user, methods=["GET"])
+chats_bp.add_url_rule("/direct-chat-id-with-user/<int:second_user_id>", "get_direct_chat_with_second_user", chats_controller.get_direct_chat_id_with_second_user, methods=["GET"])
 
 chats_bp.add_url_rule("/<int:chat_id>/messages", "get_chat_messages", chats_controller.get_chat_messages, methods=["GET"])
 

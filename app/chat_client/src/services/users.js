@@ -3,16 +3,16 @@ import axios from "./axiosConfig"
 
 class UsersService{
 
-    apiPrefix = "/users"
+    apiPrefix = "/api/users"
 
-    async search(limit, offset, username, token){
+    async search(limit, offset, username, token, excludeUsers){
         try {
             const response = await axios.get(`${this.apiPrefix}/`, {
                 params: {
-                    limit,
-                    offset,
-                    username,
-                    excludeCurrentUser: true
+                    "limit": limit,
+                    "offset": offset,
+                    "username": username,
+                    "excludeUsers": excludeUsers.join(",") 
                 },
                 headers: {
                     "Authorization": `Bearer ${token}`,

@@ -14,7 +14,7 @@ export const useAuth = () => {
 export function AuthProvider({ children }) {
     
     const [token, setToken] = useState(() => localStorage.getItem("authToken"))
-    const [userId, setUserId] = useState(() => localStorage.getItem("userId"))
+    const [userId, setUserId] = useState(() => parseInt(localStorage.getItem("userId")))
 
     const login = (userToken, user) => {
       setToken(userToken)
