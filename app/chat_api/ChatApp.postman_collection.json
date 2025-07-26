@@ -1,0 +1,1144 @@
+{
+	"info": {
+		"_postman_id": "78c65c48-8c3a-4be7-bdd7-5c2728ef7771",
+		"name": "Chat App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22380686"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/auth/current",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"current"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Current User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/auth/current",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"current"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:57:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "251"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OK\",\n    \"user\": {\n        \"creationDate\": \"2025-07-25T23:55:18.006828\",\n        \"email\": \"ponzio31@gmail.com\",\n        \"id\": 2,\n        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n        \"role\": \"user\",\n        \"username\": \"ponzio31@gmail.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ponzio31@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ponzio31@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/auth/login",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:57:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "473"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OK\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6InBvbnppbzMxQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIn0sImlhdCI6MTc1MzU1OTg2MCwiZXhwIjoxNzUzNTg4NjYwfQ.zmfyyhKtdOIJeyIN9cSiLmjwPYu09gEtlFLDtz1odbQ\",\n    \"user\": {\n        \"creationDate\": \"2025-07-25T23:55:18.006828\",\n        \"email\": \"ponzio31@gmail.com\",\n        \"id\": 2,\n        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n        \"role\": \"user\",\n        \"username\": \"ponzio31@gmail.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"new_user123\",\r\n    \"email\": \"new_user123@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/signup",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Signup",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"new_user123\",\r\n    \"email\": \"new_user123@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/auth/signup",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:58:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Created\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"verification token\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/verify-email/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify-email",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/users/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/users/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:58:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1265"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OK\",\n    \"totalCount\": 5,\n    \"users\": [\n        {\n            \"creationDate\": \"2025-07-25T23:55:18.006828\",\n            \"email\": \"ponzio31@gmail.com\",\n            \"id\": 2,\n            \"isVerified\": true,\n            \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n            \"role\": \"user\",\n            \"username\": \"ponzio31@gmail.com\"\n        },\n        {\n            \"creationDate\": \"2025-07-25T23:56:06.327122\",\n            \"email\": \"mauriciocampioni70@gmail.com\",\n            \"id\": 3,\n            \"isVerified\": true,\n            \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n            \"role\": \"user\",\n            \"username\": \"Mauricio\"\n        },\n        {\n            \"creationDate\": \"2025-07-26T00:30:44.925362\",\n            \"email\": \"ponzio33@gmail.com\",\n            \"id\": 7,\n            \"isVerified\": true,\n            \"pictureId\": null,\n            \"role\": \"user\",\n            \"username\": \"ponzio33\"\n        },\n        {\n            \"creationDate\": \"2025-07-26T00:25:35.423482\",\n            \"email\": \"francoponzio31@gmail.com\",\n            \"id\": 4,\n            \"isVerified\": true,\n            \"pictureId\": null,\n            \"role\": \"user\",\n            \"username\": \"francoponzio31\"\n        },\n        {\n            \"creationDate\": \"2025-07-26T00:30:01.275608\",\n            \"email\": \"francoponzio32@gmail.com\",\n            \"id\": 5,\n            \"isVerified\": true,\n            \"pictureId\": null,\n            \"role\": \"user\",\n            \"username\": \"francoponzio31\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/users/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/users/2",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:58:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "275"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OK\",\n    \"user\": {\n        \"creationDate\": \"2025-07-25T23:55:18.006828\",\n        \"email\": \"ponzio31@gmail.com\",\n        \"id\": 2,\n        \"isVerified\": true,\n        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n        \"role\": \"user\",\n        \"username\": \"ponzio31@gmail.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Current User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ponzio31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Current User",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"ponzio31\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/users",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:58:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "265"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OK\",\n    \"user\": {\n        \"creationDate\": \"2025-07-25T23:55:18.006828\",\n        \"email\": \"ponzio31@gmail.com\",\n        \"id\": 2,\n        \"isVerified\": true,\n        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n        \"role\": \"user\",\n        \"username\": \"ponzio31\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Get Current User Chats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/chats",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"chats"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Current User Chats",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/chats",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"chats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:59:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2774"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"chats\": [\n        {\n            \"chatMembers\": [\n                {\n                    \"joinedDate\": \"2025-07-26T15:25:03.831227\",\n                    \"user\": {\n                        \"id\": 2,\n                        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                        \"username\": \"ponzio31\"\n                    }\n                },\n                {\n                    \"joinedDate\": \"2025-07-26T15:25:03.830585\",\n                    \"user\": {\n                        \"id\": 4,\n                        \"pictureId\": null,\n                        \"username\": \"francoponzio31\"\n                    }\n                }\n            ],\n            \"creationDate\": \"2025-07-26T15:25:03.825381\",\n            \"groupName\": null,\n            \"id\": 5,\n            \"isGroup\": false,\n            \"unreadMessages\": 0\n        },\n        {\n            \"chatMembers\": [\n                {\n                    \"joinedDate\": \"2025-07-26T00:48:58.387254\",\n                    \"user\": {\n                        \"id\": 2,\n                        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                        \"username\": \"ponzio31\"\n                    }\n                },\n                {\n                    \"joinedDate\": \"2025-07-26T00:48:58.387720\",\n                    \"user\": {\n                        \"id\": 7,\n                        \"pictureId\": null,\n                        \"username\": \"ponzio33\"\n                    }\n                }\n            ],\n            \"creationDate\": \"2025-07-26T00:48:58.386686\",\n            \"groupName\": null,\n            \"id\": 4,\n            \"isGroup\": false,\n            \"unreadMessages\": 0\n        },\n        {\n            \"chatMembers\": [\n                {\n                    \"joinedDate\": \"2025-07-26T00:35:24.778662\",\n                    \"user\": {\n                        \"id\": 7,\n                        \"pictureId\": null,\n                        \"username\": \"ponzio33\"\n                    }\n                },\n                {\n                    \"joinedDate\": \"2025-07-26T00:35:24.777675\",\n                    \"user\": {\n                        \"id\": 2,\n                        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                        \"username\": \"ponzio31\"\n                    }\n                },\n                {\n                    \"joinedDate\": \"2025-07-26T00:35:24.778248\",\n                    \"user\": {\n                        \"id\": 3,\n                        \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                        \"username\": \"Mauricio\"\n                    }\n                }\n            ],\n            \"creationDate\": \"2025-07-26T00:35:24.776949\",\n            \"groupName\": \"los gordos bandalos\",\n            \"id\": 3,\n            \"isGroup\": true,\n            \"unreadMessages\": 0\n        },\n        {\n            \"chatMembers\": [\n                {\n                    \"joinedDate\": \"2025-07-26T00:11:52.008894\",\n                    \"user\": {\n                        \"id\": 2,\n                        \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                        \"username\": \"ponzio31\"\n                    }\n                },\n                {\n                    \"joinedDate\": \"2025-07-26T00:11:52.009467\",\n                    \"user\": {\n                        \"id\": 3,\n                        \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                        \"username\": \"Mauricio\"\n                    }\n                }\n            ],\n            \"creationDate\": \"2025-07-26T00:11:52.006718\",\n            \"groupName\": null,\n            \"id\": 1,\n            \"isGroup\": false,\n            \"unreadMessages\": 0\n        }\n    ],\n    \"message\": \"OK\",\n    \"totalCount\": 4\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Chat By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/chats/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"chats",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Chat By Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/chats/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"chats",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:59:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "597"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"chat\": {\n        \"chatMembers\": [\n            {\n                \"joinedDate\": \"2025-07-26T00:11:52.009467\",\n                \"user\": {\n                    \"id\": 3,\n                    \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                    \"username\": \"Mauricio\"\n                }\n            },\n            {\n                \"joinedDate\": \"2025-07-26T00:11:52.008894\",\n                \"user\": {\n                    \"id\": 2,\n                    \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                    \"username\": \"ponzio31\"\n                }\n            }\n        ],\n        \"creationDate\": \"2025-07-26T00:11:52.006718\",\n        \"groupName\": null,\n        \"id\": 1,\n        \"isGroup\": false\n    },\n    \"message\": \"OK\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Direct Chat With Second User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/chats/direct-chat-id-with-user/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"chats",
+								"direct-chat-id-with-user",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Direct Chat With Second User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/chats/direct-chat-id-with-user/3",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"chats",
+										"direct-chat-id-with-user",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:59:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"chatId\": 1,\n    \"isNewChat\": false,\n    \"message\": \"OK\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Chat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_group\":  true,\r\n    \"group_name\": \"test\",\r\n    \"chat_members_ids\": [2, 3]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/chats/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"chats",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Chat",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"is_group\":  true,\r\n    \"group_name\": \"test\",\r\n    \"chat_members_ids\": [2, 3]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/chats/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"chats",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:59:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "603"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"chat\": {\n        \"chatMembers\": [\n            {\n                \"joinedDate\": \"2025-07-26T19:59:47.732815\",\n                \"user\": {\n                    \"id\": 2,\n                    \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                    \"username\": \"ponzio31\"\n                }\n            },\n            {\n                \"joinedDate\": \"2025-07-26T19:59:47.733362\",\n                \"user\": {\n                    \"id\": 3,\n                    \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                    \"username\": \"Mauricio\"\n                }\n            }\n        ],\n        \"creationDate\": \"2025-07-26T19:59:47.732202\",\n        \"groupName\": \"test\",\n        \"id\": 7,\n        \"isGroup\": true\n    },\n    \"message\": \"Created\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Chat Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/chats/1/messages",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"chats",
+								"1",
+								"messages"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Chat Messages",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/chats/1/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"chats",
+										"1",
+										"messages"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:59:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "5470"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OK\",\n    \"messages\": [\n        {\n            \"chatId\": 1,\n            \"content\": \"3\",\n            \"id\": 19,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:33:05.670606\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"5\",\n            \"id\": 18,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:33:02.786944\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"4\",\n            \"id\": 17,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 3,\n                \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                \"username\": \"Mauricio\"\n            },\n            \"sentDate\": \"2025-07-26T00:23:05.705673\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"3\",\n            \"id\": 16,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 3,\n                \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                \"username\": \"Mauricio\"\n            },\n            \"sentDate\": \"2025-07-26T00:23:05.362257\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"2\",\n            \"id\": 15,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 3,\n                \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                \"username\": \"Mauricio\"\n            },\n            \"sentDate\": \"2025-07-26T00:23:04.890944\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"1\",\n            \"id\": 14,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 3,\n                \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                \"username\": \"Mauricio\"\n            },\n            \"sentDate\": \"2025-07-26T00:23:04.450717\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"Que pasa puto\",\n            \"id\": 13,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 3,\n                \"pictureId\": \"2a33326f-12a7-4b71-81c4-aebb3556ad2b\",\n                \"username\": \"Mauricio\"\n            },\n            \"sentDate\": \"2025-07-26T00:22:24.355951\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"y\",\n            \"id\": 12,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:21:34.493252\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"67\",\n            \"id\": 11,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:21:33.930570\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"56\",\n            \"id\": 10,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:21:33.213253\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"4\",\n            \"id\": 9,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:21:32.131255\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"3\",\n            \"id\": 8,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:21:31.456978\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"2\",\n            \"id\": 7,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:21:29.971991\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"2\",\n            \"id\": 6,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:20:48.814778\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"1\",\n            \"id\": 5,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:20:46.343231\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"qwe\",\n            \"id\": 4,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:12:37.308551\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"holaaa\",\n            \"id\": 3,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:12:26.776154\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"aguante cr7\",\n            \"id\": 2,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:12:10.394928\"\n        },\n        {\n            \"chatId\": 1,\n            \"content\": \"hola mauri\",\n            \"id\": 1,\n            \"readByUser\": true,\n            \"senderUser\": {\n                \"id\": 2,\n                \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n                \"username\": \"ponzio31\"\n            },\n            \"sentDate\": \"2025-07-26T00:11:56.829651\"\n        }\n    ],\n    \"totalCount\": 19\n}"
+						}
+					]
+				},
+				{
+					"name": "Send message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"How are you???\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/chats/1/messages",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"chats",
+								"1",
+								"messages"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Send message",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"content\": \"How are you???\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/chats/1/messages",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"chats",
+										"1",
+										"messages"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 19:59:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "289"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Created\",\n    \"newMessage\": {\n        \"chatId\": 1,\n        \"content\": \"How are you???\",\n        \"id\": 43,\n        \"senderUser\": {\n            \"id\": 2,\n            \"pictureId\": \"4d9b538a-99c2-441c-930e-ba6b6f6d3448\",\n            \"username\": \"ponzio31\"\n        },\n        \"sentDate\": \"2025-07-26T19:59:57.854635\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Record Message Read By Current User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"messages_id\": [1]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/chats/messages/record-reading",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"chats",
+								"messages",
+								"record-reading"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Record Message Read By Current User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"messages_id\": [1]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/chats/messages/record-reading",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"chats",
+										"messages",
+										"record-reading"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "gunicorn"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Jul 2025 20:00:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Created\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{vault:chat_app_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080",
+			"type": "default"
+		}
+	]
+}
