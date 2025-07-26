@@ -17,11 +17,6 @@ def check_authentication(token: str) -> dict:
         raise AuthenticationFailedError
 
 
-def check_if_user_is_in_chat(chat_id: int, user_id: int):
-    if not chats_service.check_if_user_is_in_chat(chat_id, user_id):
-        raise UserIsNotInChatError
-
-
 def handle_connect(auth):
     try:
         user_data = check_authentication(auth.get("token", ""))
@@ -54,7 +49,7 @@ def handle_join_chat(data: dict):
         user_data = check_authentication(data.get("token", ""))
         user_id = user_data["user"]["id"]
         event_detail =  join_chat_event_schema.load(data.get("detail", {}))
-        check_if_user_is_in_chat(event_detail["chat_id"], user_id)
+        chats_service.check_if_user_is_in_chat(event_detail["chat_id"], user_id)
         join_room(event_detail["chat_id"])
         logger.info(f"User {repr(user_id)} joined chat room: {repr(event_detail['chat_id'])}")
     except ValidationError as ex:
@@ -69,7 +64,7 @@ def handle_send_message(data: dict):
     try:
         check_authentication(data.get("token", ""))
         new_message = message_output_schema.load(data.get("message", {}))
-        check_if_user_is_in_chat(new_message["chat_id"], new_message["sender_user"]["id"])
+        chats_service.check_if_user_is_in_chat(new_message["chat_id"], new_message["sender_user"]["id"])
         emit("new_message", message_output_schema.dump(new_message), room=new_message["chat_id"])
         logger.info(f"Successfully emitted new_message event for user {repr(new_message['sender_user']['id'])} in chat room {repr(new_message['chat_id'])}")
     except ValidationError as ex:

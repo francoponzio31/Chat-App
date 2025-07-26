@@ -29,19 +29,19 @@ services:
     ports:
       - 5173:5173
 
-  # chat_client_prod:
-  #   build:
-  #     context: ./app/chat_client
-  #     dockerfile: Dockerfile.prod
-  #   env_file:
-  #     - ./app/chat_client/.env
-  #   volumes:
-  #     - ./app/chat_client/dist:/usr/share/nginx/html
-  #     - chat_app_files:/usr/share/nginx/html/files
-  #   ports:
-  #     - 8000:80
-  #   depends_on:
-  #     - chat_api
+  chat_client_prod:
+    build:
+      context: ./app/chat_client
+      dockerfile: Dockerfile.prod
+    env_file:
+      - ./app/chat_client/.env
+    volumes:
+      - ./app/chat_client/dist:/usr/share/nginx/html
+      - chat_app_files:/usr/share/nginx/html/files
+    ports:
+      - 8000:80
+    depends_on:
+      - chat_api
 
   fileserver:
     build:
