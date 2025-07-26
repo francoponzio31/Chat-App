@@ -53,17 +53,19 @@ class ChatsController:
             return get_error_response(status=status_codes.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-    # TODO: current user must belong to the chat
     @login_required
     def get_chat_by_id(self, chat_id:int) -> tuple[Response, int]:
         try:
-            chat = chats_service.get_chat_by_id(chat_id)
+            user_id = g.user.id
+            chat = chats_service.get_chat_by_id(chat_id, user_id)
             chat_output = chat_output_schema.dump(chat)
             return get_success_response(status=status_codes.HTTP_200_OK, chat=chat_output)
         except ValidationError as ex:
             return get_error_response(status=status_codes.HTTP_400_BAD_REQUEST, message=f"Invalid data: {ex.messages}")
         except EntityNotFoundError as ex:
             return get_error_response(status=status_codes.HTTP_404_NOT_FOUND, message=str(ex))
+        except UserIsNotInChatError:
+            return get_error_response(status=status_codes.HTTP_403_FORBIDDEN, message="User is not in the chat")
         except Exception as ex:
             logger.exception(str(ex))
             return get_error_response(status=status_codes.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -84,7 +86,6 @@ class ChatsController:
             return get_error_response(status=status_codes.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-    # TODO: current user must belong to the chat
     @login_required
     def get_chat_messages(self, chat_id:int) -> tuple[Response, int]:
         try:
@@ -95,12 +96,13 @@ class ChatsController:
             return get_success_response(status=status_codes.HTTP_200_OK, messages=messages_output, total_count=total_count)
         except EntityNotFoundError as ex:
             return get_error_response(status=status_codes.HTTP_404_NOT_FOUND, message=str(ex))
+        except UserIsNotInChatError:
+            return get_error_response(status=status_codes.HTTP_403_FORBIDDEN, message="User is not in the chat")
         except Exception as ex:
             logger.exception(str(ex))
             return get_error_response(status=status_codes.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-    # TODO: current user must belong to the chat
     @login_required
     def send_message(self, chat_id:int) -> tuple[Response, int]:
         try:
@@ -112,7 +114,7 @@ class ChatsController:
         except ValidationError as ex:
             return get_error_response(status=status_codes.HTTP_400_BAD_REQUEST, message=f"Invalid data: {ex.messages}")
         except UserIsNotInChatError:
-            return get_error_response(status=status_codes.HTTP_409_CONFLICT, message="Sender user is not in the chat")
+            return get_error_response(status=status_codes.HTTP_403_FORBIDDEN, message="User is not in the chat")
         except Exception as ex:
             logger.exception(str(ex))
             return get_error_response(status=status_codes.HTTP_500_INTERNAL_SERVER_ERROR)

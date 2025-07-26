@@ -4,13 +4,10 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import Alert from "react-bootstrap/Alert"
 import authService from "../services/auth.js"
-import { useAuth } from "../contexts/AuthContext.jsx"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRocketchat } from "@fortawesome/free-brands-svg-icons"
 
 export default function Signup(){
-
-    const authContext = useAuth()
 
     const usernameInputRef = useRef(null)
     const emailInputRef = useRef(null)
@@ -36,14 +33,13 @@ export default function Signup(){
         }
         
         try {
-            const response = await authService.signup(
+            await authService.signup(
                 usernameInputRef.current.value,
                 emailInputRef.current.value,
                 passwordInputRef.current.value
             )
-            authContext.login(response.token)
+
             setShowSuccessModal(true)
-            
             usernameInputRef.current.value = ""
             emailInputRef.current.value = ""
             passwordInputRef.current.value = ""
@@ -60,6 +56,8 @@ export default function Signup(){
                 setError("Sorry, an error has occurred. Please try again")
             }
         }
+
+
     }
 
     return (

@@ -13,7 +13,13 @@ class ChatsService:
         return chats_repository.create_chat(is_group=is_group, group_name=group_name, chat_members_ids=chat_members_ids)
 
 
-    def get_chat_by_id(self, chat_id:int) -> list[ChatModel]:
+    def get_chat_by_id(self, chat_id:int, user_id:int) -> list[ChatModel]:
+        user_is_in_chat = self.check_if_user_is_in_chat(
+            chat_id = chat_id,
+            user_id = user_id,
+        )
+        if not user_is_in_chat:
+            raise UserIsNotInChatError
         return chats_repository.get_by_id(chat_id)
     
 
@@ -37,6 +43,12 @@ class ChatsService:
 
 
     def get_chat_messages(self, chat_id:int, user_id:int, limit:int|None=None, offset:int|None=None) -> list[MessageModel]:
+        user_is_in_chat = self.check_if_user_is_in_chat(
+            chat_id = chat_id,
+            user_id = user_id,
+        )
+        if not user_is_in_chat:
+            raise UserIsNotInChatError
         return chats_repository.get_chat_messages(chat_id, user_id, limit, offset)
 
 

@@ -16,7 +16,10 @@ def create_app() -> Flask:
     app.config.from_object(config)
 
     # CORS
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app, 
+        resources={r"/api/*": {"origins": "*"}},
+        allow_headers="*",
+    )
 
     # DB
     with app.app_context():

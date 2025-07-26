@@ -40,6 +40,8 @@ services:
   #     - chat_app_files:/usr/share/nginx/html/files
   #   ports:
   #     - 8000:80
+  #   depends_on:
+  #     - chat_api
 
   fileserver:
     build:

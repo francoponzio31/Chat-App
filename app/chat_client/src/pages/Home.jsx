@@ -22,7 +22,6 @@ function ChatsSection({chatType}){
     const [showChatModal, setShowChatModal] = useState(false)
     const handleShowChatModal = () => setShowChatModal(true)
     const getUserChats = async () => {
-        setLoadingChats(true)
         try {
             const response = await chatsService.getUserChats({
                 limit: 10,
@@ -32,16 +31,16 @@ function ChatsSection({chatType}){
             })
             const chats = response.chats
             setUserChats(chats)
-            setLoadingChats(false)
         } catch (error) {
             console.error("Error fetching data:", error)
-            setLoadingChats(false)
         }
     } 
 
     // useEffect to fetch user chats for first render
     useEffect(() => {
+        setLoadingChats(true)
         getUserChats()
+        setLoadingChats(false)
     }, [])
 
     // useEffect to listen for new messages and update chats
